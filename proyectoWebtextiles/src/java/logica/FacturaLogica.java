@@ -42,22 +42,53 @@ private FacturaFacadeLocal facturaDAO;
 
     @Override
     public void modificar(Factura factura) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+          Factura objFactura = facturaDAO.find(factura.getCodigoFactura());
+    if(factura!=null){
+        if(factura.getCodigoFactura()==null){
+            throw new Exception("Codigo de la factura  es obligatorio"); 
+        }else if(factura.getCedulaCliente()==null || factura.getCedulaCliente().equals("")){
+            throw new Exception("La cedula  es obligatorio");
+        }
+    }else{
+        throw new Exception("La factura no tiene informacion");
+    }
+    if(objFactura==null){
+        facturaDAO.edit(factura);
+    }else{
+        throw new Exception("La factura ya esta registrado");
+    }
     }
 
     @Override
     public void eliminar(Factura factura) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         Factura objFactura = facturaDAO.find(factura.getCodigoFactura());
+    if(factura!=null){
+        if(factura.getCedulaCliente()==null){
+            throw new Exception("Codigo de la factura obligatorio"); 
+        }
+    }else{
+        throw new Exception("En la base de datos la factura a eliminar no existe");
+    }
+    if(objFactura==null){
+         throw new Exception("La factura no existe, no se puede eliminar");
+    }else{
+       
+        facturaDAO.remove(factura);
+    }
     }
 
     @Override
     public Factura consultarPorCodigo(Integer codigoFactura) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         if(codigoFactura!=null){
+           return facturaDAO.find(codigoFactura);
+       }else{
+           throw new Exception("El codigo para consultar es obligatorio");
+       }
     }
 
     @Override
     public List<Factura> consultarTodo() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return facturaDAO.findAll();
     }
 
     // Add business logic below. (Right-click in editor and choose
