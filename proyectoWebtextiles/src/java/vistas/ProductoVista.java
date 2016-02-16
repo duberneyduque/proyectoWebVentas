@@ -37,7 +37,7 @@ public class ProductoVista {
    
     private InputText txtcodigoProducto;
     private InputText txtnombreProducto;
-    private Date txtfechaProducto;
+    private Calendar txtfechaProducto;
     private InputText txtgeneroProducto;
     private SelectOneMenu cmbgeneroProducto;
     private InputText txtcolorProducto;
@@ -94,11 +94,11 @@ private CategoriaLogicaLocal categoriaLogica;
         this.txtnombreProducto = txtnombreProducto;
     }
 
-    public Date getTxtfechaProducto() {
+    public Calendar getTxtfechaProducto() {
         return txtfechaProducto;
     }
 
-    public void setTxtfechaProducto(Date txtfechaProducto) {
+    public void setTxtfechaProducto(Calendar txtfechaProducto) {
         this.txtfechaProducto = txtfechaProducto;
     }
 
@@ -143,6 +143,18 @@ private CategoriaLogicaLocal categoriaLogica;
     }
 
     public ArrayList<SelectItem> getOpcionesProducto() {
+     /*  if(opcionesProducto==null){
+           try {
+               opcionesProducto=new ArrayList<>();
+               List<Producto> listaproductos=productologica.consultarTodo();
+               for (int i = 0; i < listaproductos.size(); i++) {
+                   opcionesProducto.add(new SelectItem(listaproductos.get(i).getCodigoProducto(),listaproductos.get(i).getGeneroProducto()));
+               }
+           } catch (Exception ex) {
+               Logger.getLogger(ProductoVista.class.getName()).log(Level.SEVERE, null, ex);
+           }
+       }*/
+        
         return opcionesProducto;
     }
 

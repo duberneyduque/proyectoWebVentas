@@ -25,6 +25,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.primefaces.component.calendar.Calendar;
 
 /**
  *
@@ -198,6 +199,10 @@ public class Producto implements Serializable {
     @Override
     public String toString() {
         return "modelo.Producto[ codigoProducto=" + codigoProducto + " ]";
+    }
+
+    public void setFechaIngresoProducto(Calendar txtfechaProducto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
