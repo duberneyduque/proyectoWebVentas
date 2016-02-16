@@ -29,5 +29,11 @@ public interface ClienteFacadeLocal {
     List<Cliente> findRange(int[] range);
 
     int count();
+
+    public List<Cliente> consultarDevolucionCliente(String nombre);
+
+    public List<Cliente> consultarDevolucionCliente(Long cedulacliente);
+
+    public List<Cliente> consultarDevolucionCliente(Long cedulacliente);
     
 }
