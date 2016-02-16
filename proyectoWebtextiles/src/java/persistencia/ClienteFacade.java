@@ -5,6 +5,7 @@
  */
 package persistencia;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,6 +27,16 @@ public class ClienteFacade extends AbstractFacade<Cliente> implements ClienteFac
 
     public ClienteFacade() {
         super(Cliente.class);
+    }
+
+    @Override
+    public List<Cliente> consultarDevolucionCliente(String nombre) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Cliente> consultarDevolucionCliente(Long cedulacliente) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

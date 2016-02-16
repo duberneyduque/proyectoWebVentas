@@ -6,6 +6,7 @@
 package logica;
 
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import modelo.Cliente;
 import persistencia.ClienteFacadeLocal;

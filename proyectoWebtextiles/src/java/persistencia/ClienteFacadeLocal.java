@@ -34,6 +34,5 @@ public interface ClienteFacadeLocal {
 
     public List<Cliente> consultarDevolucionCliente(Long cedulacliente);
 
-    public List<Cliente> consultarDevolucionCliente(Long cedulacliente);
     
 }
