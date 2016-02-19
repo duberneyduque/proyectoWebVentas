@@ -102,7 +102,7 @@ public class Producto implements Serializable {
     }
 
     public Date getFechaIngresoProducto() {
-        return fechaIngresoProducto;
+        return new java.sql.Date(fechaIngresoProducto.getTime());
     }
 
     public void setFechaIngresoProducto(Date fechaIngresoProducto) {
@@ -202,7 +202,7 @@ public class Producto implements Serializable {
     }
 
     public void setFechaIngresoProducto(Calendar txtfechaProducto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

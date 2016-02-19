@@ -40,6 +40,7 @@ public class ProductoVista {
     private Calendar txtfechaProducto;
     private InputText txtgeneroProducto;
     private SelectOneMenu cmbgeneroProducto;
+     private SelectOneMenu cmbEstadoProducto;
     private InputText txtcolorProducto;
     private InputText txtPrecioProducto;
     private InputText txtcodigoCategoria;
@@ -60,6 +61,14 @@ private ProductoLogicaLocal productologica;
 private CategoriaLogicaLocal categoriaLogica;
 
     public ProductoVista() {
+    }
+
+    public SelectOneMenu getCmbEstadoProducto() {
+        return cmbEstadoProducto;
+    }
+
+    public void setCmbEstadoProducto(SelectOneMenu cmbEstadoProducto) {
+        this.cmbEstadoProducto = cmbEstadoProducto;
     }
 
     public SelectOneMenu getCmbgeneroProducto() {
@@ -255,13 +264,14 @@ private CategoriaLogicaLocal categoriaLogica;
             Categoria nuevaCategoria = new Categoria();
             nuevoProducto.setCodigoProducto(Integer.parseInt(txtcodigoProducto.getValue().toString()));
             nuevoProducto.setNombreProducto(txtnombreProducto.getValue().toString());
-            nuevoProducto.setFechaIngresoProducto(txtfechaProducto);
-            nuevoProducto.setGeneroProducto(txtgeneroProducto.getValue().toString());
+            nuevoProducto.setFechaIngresoProducto((Date)txtfechaProducto.getValue());
+            nuevoProducto.setGeneroProducto(cmbgeneroProducto.getValue().toString());
+             nuevoProducto.setEstadoProducto(cmbEstadoProducto.getValue().toString());
             nuevoProducto.setColorProducto(txtcolorProducto.getValue().toString());
             nuevoProducto.setPrecioProducto(Double.parseDouble(txtPrecioProducto.getValue().toString()));
             nuevaCategoria.setCodigoCategoria(Integer.parseInt(txtcodigoCategoria.getValue().toString()));
             nuevoProducto.setCodigoCategoria(nuevaCategoria);
-            nuevoProducto.setEstadoProducto(cmbCategoria.getValue().toString());
+           
  
             productologica.crear(nuevoProducto);
            // limpiar();

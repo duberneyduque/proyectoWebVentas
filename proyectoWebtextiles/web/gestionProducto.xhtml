@@ -61,6 +61,12 @@ and open the template in the editor.
                                 <p:column>
                                     <p:inputText id="txtnombre" binding="#{productoVistav.txtnombreProducto}"/>
                                 </p:column>
+                                 <p:column>
+                                    <h:outputLabel  value="Fecha Producto"/>
+                                </p:column>
+                                <p:column style="word-spacing: 10px">
+                                    <p:calendar id="txtfecha" binding="#{productoVistav.txtfechaProducto}"  />
+                                </p:column>
                             </p:row>
                             <p:row>
                                 <p:column>
@@ -73,6 +79,14 @@ and open the template in the editor.
                                        <f:selectItem itemValue="Dama" itemLabel="Dama"/>
                                        <f:selectItem itemValue="Niño" itemLabel="Niño"/>
                                         <f:selectItem itemValue="Niña" itemLabel="Niña"/>
+                                    </p:selectOneMenu>
+                                    
+                                </p:column>
+                                 <p:column>
+                                     <p:selectOneMenu id="cmbEstadoProducto" binding="#{productoVistav.cmbEstadoProducto}">
+                                        <f:selectItem itemValue="seleccione" itemLabel="seleccione"/>
+                                       <f:selectItem itemValue="Activo" itemLabel="Activo"/>
+                                       <f:selectItem itemValue="Inativo" itemLabel="Inativo"/>
                                     </p:selectOneMenu>
                                     
                                 </p:column>

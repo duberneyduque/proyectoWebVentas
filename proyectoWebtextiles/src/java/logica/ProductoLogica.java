@@ -25,9 +25,9 @@ private ProductoFacadeLocal productoDAO;
     if(producto!=null){
         if(producto.getCodigoProducto()==null){
             throw new Exception("Codigo de producto obligatorio"); 
-        }else if(producto.getNombreProducto()==null || producto.getNombreProducto().equals("")){
-            throw new Exception("El nombre es obligatorio");
-        }
+        }//else if(producto.getNombreProducto()==null || producto.getNombreProducto().equals("")){
+           // throw new Exception("El nombre es obligatorio");
+       // }
     }else{
         throw new Exception("El producto no tiene informacion");
     }
