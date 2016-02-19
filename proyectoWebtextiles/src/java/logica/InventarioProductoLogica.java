@@ -24,40 +24,70 @@ public class InventarioProductoLogica implements InventarioProductoLogicaLocal {
         Inventarioproducto objinventarioproducto = inventarioproductoDAO.find(inventarioproducto.getInventarioproductoPK().getTallaInventario());
     if(inventarioproducto!=null){
         if(inventarioproducto.getInventarioproductoPK().getTallaInventario()==null){
-            throw new Exception("Codigo de la factura  es obligatorio"); 
+            throw new Exception("Codigo de la talla  es obligatorio"); 
         }else if(inventarioproducto.getProducto()==null || inventarioproducto.getProducto().equals("")){
-            throw new Exception("La cedula  es obligatorio");
+            throw new Exception("el producto es obligatorio");
         }
     }else{
-        throw new Exception("La factura no tiene informacion");
+        throw new Exception("El inventario no tiene informacion");
     }
     if(objinventarioproducto==null){
         inventarioproductoDAO.create(inventarioproducto);
     }else{
-        throw new Exception("La factura ya esta registrado");
+        throw new Exception("La talla  ya esta registrado");
     }
     }
 
     @Override
     public void modificar(Inventarioproducto inventarioproducto) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Inventarioproducto objinventarioproducto = inventarioproductoDAO.find(inventarioproducto.getInventarioproductoPK().getTallaInventario());
+    if(inventarioproducto!=null){
+        if(inventarioproducto.getInventarioproductoPK().getTallaInventario()==null){
+            throw new Exception("Codigo de la talla  es obligatorio"); 
+        }else if(inventarioproducto.getProducto()==null || inventarioproducto.getProducto().equals("")){
+            throw new Exception("el producto es obligatorio");
+        }
+    }else{
+        throw new Exception("El inventario no tiene informacion");
+    }
+    if(objinventarioproducto==null){
+        inventarioproductoDAO.edit(inventarioproducto);
+    }else{
+        throw new Exception("La talla  ya esta registrado");
+    }
     }
 
     @Override
     public void eliminar(Inventarioproducto inventarioproducto) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+          Inventarioproducto objinventarioproducto = inventarioproductoDAO.find(inventarioproducto.getInventarioproductoPK().getTallaInventario());
+    if(inventarioproducto!=null){
+        if(inventarioproducto.getInventarioproductoPK().getTallaInventario()==null){
+            throw new Exception("La talla de iventario es obligatorio"); 
+        }
+    }else{
+        throw new Exception("En la base de datos la talla  a eliminar no existe");
+    }
+    if(objinventarioproducto==null){
+         throw new Exception("La talla no existe, no se puede eliminar");
+    }else{
+       
+        inventarioproductoDAO.remove(inventarioproducto);
+    }
     }
 
     @Override
     public Inventarioproducto consultarPorCodigo(Inventarioproducto inventarioproducto) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(inventarioproducto.getInventarioproductoPK().getTallaInventario()!=null){
+           return inventarioproductoDAO.find(inventarioproducto);
+       }else{
+           throw new Exception("La talla  para consultar es obligatorio");
+       }
     }
 
     @Override
     public List<Inventarioproducto> consultarTodo() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return inventarioproductoDAO.findAll();
     }
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+  
 }
