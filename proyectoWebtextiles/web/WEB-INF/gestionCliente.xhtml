@@ -18,7 +18,7 @@
             <p:layout fullPage="true">
 
                 <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
-                    GESTION DE CIUDADES
+                    GESTION DE CLIENTES
                 </p:layoutUnit>
 
                 <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
@@ -28,9 +28,9 @@
                 <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
                     <p:menu>
                         <p:submenu label="Resources">
-                            <p:menuitem value="CATEGORIA" url="gestionCategoria.xhtml" />
-                            <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
-                            <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
+                            <p:menuitem value="CATEGORIA" url="faces/gestionCategoria.xhtml" />
+                            <p:menuitem value="Documentation" url="faces/gestionCiudad.xhtml" />
+                            <p:menuitem value="Forum" url="faces/gestionProducto" />
                             <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
 
                         </p:submenu>
@@ -44,38 +44,38 @@
                         <p:panelGrid columns="5">
 
                             <h:outputLabel value="Cedula Cliente" />
-                            <p:inputText id="txtCodigo" binding="#{ciudadVistav.txtcodigociudad}"/>
-                            <h:outputLabel  value="Nombre Ciudad"/>
-                            <p:inputText id="txtnombre" binding="#{ciudadVistav.txtnombreciudad}"/>
+                            <p:inputText id="txtCedulaCliente" binding="#{ClienteVista.txtCedulaCliente}"/>
+                            <h:outputLabel  value="Nombre Cliente"/>
+                            <p:inputText id="txtNombreCliente" binding="#{ClienteVista.txtNombreCliente}"/>
                            
 
-                            <p:commandButton value="REGISTRAR" binding="#{ciudadVistav.btnRegistrar}" action="#{ciudadVistav.accion_registrar()}" update="formulario"/>
+                            <p:commandButton value="REGISTRAR" binding="#{ClienteVista.btnRegistrar}" action="#{ClienteVista.accion_registrar()}" update="formulario"/>
 
-                            <p:commandButton value="MODIFICAR" binding="#{ciudadVistav.btnModificar}" action="#{ciudadVistav.accion_modificar()}" update="formulario"/>
-                            <p:commandButton value="ELIMINAR" binding="#{ciudadVistav.btnEliminar}" action="#{ciudadVistav.accion_eliminar()}" update="formulario"/>
-                            <p:commandButton value="LIMPIAR" binding="#{ciudadVistav.btnLimpiar}" action="#{ciudadVistav.limpiar()}" update="formulario"/>
+                            <p:commandButton value="MODIFICAR" binding="#{ClienteVista.btnModificar}" action="#{ClienteVista.accion_modificar()}" update="formulario"/>
+                            <p:commandButton value="ELIMINAR" binding="#{ClienteVista.btnEliminar}" action="#{ClienteVista.accion_eliminar()}" update="formulario"/>
+                            <p:commandButton value="LIMPIAR" binding="#{ClienteVista.btnLimpiar}" action="#{ClienteVista.limpiar()}" update="formulario"/>
                         </p:panelGrid>
 
-                            <p:dataTable var="ciudad" value="#{ciudadVistav.listaCiudad}" widgetVar="ciudad"
-                                         emptyMessage="No cars found with given criteria" filteredValue="#{ciudadVistav.listaCiudad}"
+                            <p:dataTable var="cliente" value="#{ClienteVista.listaCLiente}" widgetVar="cliente"
+                                         emptyMessage="No cars found with given criteria" filteredValue="#{ClienteVista.listaCliente}"
                                       selectionMode="single"
-                                      selection="#{ciudadVistav.selecteCiudad}"
-                                      rowKey="#{ciudad.codigoCiudad}">
-                                <p:ajax event="rowSelect" listener="#{ciudadVistav.seleccionFila(evt)}" update=":formulario" />
+                                      selection="#{cliente.selecteCliente}"
+                                      rowKey="#{cliente.cedulaCliente}">
+                                <p:ajax event="rowSelect" listener="#{ClienteVista.seleccionFila(evt)}" update=":formulario" />
 
                             <f:facet name="header">
                                 <p:outputPanel>
                                     <h:outputText value="Busqueda por codigo o nombre" />
-                                    <p:inputText id="globalFilter" onkeyup="PF('categoria').filter()" style="width:150px" placeholder="Escriba algo"/>
+                                    <p:inputText id="globalFilter" onkeyup="PF('cliente').filter()" style="width:150px" placeholder="Escriba algo"/>
                                 </p:outputPanel>
                             </f:facet>
 
-                                <p:column filterBy="#{ciudad.codigoCiudad}" headerText="CODIGO CIUDAD" footerText="" filterMatchMode="exact">
+                                <p:column filterBy="#{ClienteVista.cedulacliente}" headerText="CODIGO CIUDAD" footerText="" filterMatchMode="exact">
                                     <h:outputText value="#{ciudad.codigoCiudad}" />
                             </p:column>
 
-                            <p:column headerText="NOMBRE CATEGORIA">
-                                <h:outputText value="#{ciudad.nombreCiudad}" />
+                            <p:column headerText="NOMBRE CLIENTE">
+                                <h:outputText value="#{cliente.nombreCliente}" />
                             </p:column>
                             
                         </p:dataTable>

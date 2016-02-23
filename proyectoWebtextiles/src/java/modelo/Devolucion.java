@@ -129,5 +129,9 @@ public class Devolucion implements Serializable {
     public String toString() {
         return "modelo.Devolucion[ codigoDevolucion=" + codigoDevolucion + " ]";
     }
+
+    public void setClienteList(List<Cliente> listaClienteSeleccionadas) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
