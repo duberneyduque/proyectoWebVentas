@@ -96,6 +96,21 @@ private ClienteLogicaLocal clienteLogica;
     public void setCmbCliente(SelectOneMenu cmbCliente) {
         this.cmbCliente = cmbCliente;
     }
+      public ArrayList<SelectItem> getOpcionesCliente() {
+        if(opcionesCliente==null){
+            try {
+                opcionesCliente = new ArrayList<>();
+                List<Cliente> listaclieClientes = clienteLogica.findAll();
+                for (int i = 0; i < listaclieClientes.size(); i++) {
+                    opcionesCliente.add(new SelectItem(listaclieClientes.get(i).getCedulaCliente(), listaclieClientes.get(i).getNombreCliente()));
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(DevolucionVista.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        return opcionesCliente;
+    }
 
 
     public CommandButton getBtnRegistrar() {
