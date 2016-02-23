@@ -280,6 +280,16 @@ private CategoriaLogicaLocal categoriaLogica;
             Logger.getLogger(ProductoVista.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+     public void limpiar(){
+         txtcodigoCategoria.setValue("");
+         txtnombreProducto.setValue("");
+         txtfechaProducto.setValue("");
+         cmbgeneroProducto.setValue("seleccione");
+         txtcolorProducto.setValue("");
+         txtPrecioProducto.setValue("");
+         txtcodigoCategoria.setValue("");
+         cmbEstadoProducto.setValue("seleccione");
+     }
 public void seleccionFila(SelectEvent evt){
     Categoria objeCategoria=selectecategoria;
     txtcodigoCategoria.setValue(objeCategoria.getCodigoCategoria());
