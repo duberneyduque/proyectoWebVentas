@@ -5,7 +5,9 @@
  */
 package logica;
 
+import java.util.List;
 import javax.ejb.Local;
+import modelo.Productofactura;
 
 /**
  *
@@ -13,5 +15,14 @@ import javax.ejb.Local;
  */
 @Local
 public interface productofacturaLogicaLocal {
+     void crear(Productofactura productofactura) throws Exception;
+
+    void modificar(Productofactura productofactura) throws Exception;
+
+    void eliminar(Productofactura productofactura) throws Exception;
+
+    Productofactura consultarPorCodigo(Productofactura productofactura) throws Exception;
+    
+    List<Productofactura> consultarTodo() throws Exception;
     
 }
