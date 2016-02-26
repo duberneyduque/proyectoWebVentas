@@ -14,7 +14,6 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.model.SelectItem;
-import logica.CategoriaLogica;
 import logica.CategoriaLogicaLocal;
 import logica.ProductoLogica;
 import logica.ProductoLogicaLocal;
@@ -25,173 +24,52 @@ import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.component.selectonemenu.SelectOneMenu;
 import org.primefaces.event.SelectEvent;
-import persistencia.CategoriaFacadeLocal;
 
 /**
  *
  * @author duberport
  */
-@ManagedBean(name = "productoVistav")
+@ManagedBean(name="productoVistav")
 @RequestScoped
 public class ProductoVista {
-   
-    private InputText txtcodigoProducto;
-    private InputText txtnombreProducto;
-    private Calendar txtfechaProducto;
-    private InputText txtgeneroProducto;
-    private SelectOneMenu cmbgeneroProducto;
-     private SelectOneMenu cmbEstadoProducto;
-    private InputText txtcolorProducto;
-    private InputText txtPrecioProducto;
-    private InputText txtcodigoCategoria;
-    private SelectOneMenu cmbCategoria;
-    private ArrayList<SelectItem> opcionesProducto;
-    private List<Producto> ListaProductos;
-    private List<Categoria>listacategoriap;
-    private Producto selecProducto;
+    
+ private InputText txtcodigoProducto;
+ private InputText txtnombreProducto;
+ private Calendar  txtfechaProducto;
+ private InputText txtcategoria;
+ 
+ //botones
     private CommandButton btnRegistrar;
     private CommandButton btnModificar;
     private CommandButton btnEliminar;
     private CommandButton btnLimpiar;
-    private Categoria selectecategoria;
-@EJB
-private ProductoLogicaLocal productologica;
-
-@EJB
-private CategoriaLogicaLocal categoriaLogica;
-
+ 
+ //combobox de genero Producto 
+ private SelectOneMenu cmbGenero;
+ private ArrayList<SelectItem>opcionGenero;
+ 
+ private InputText txtColorProducto;
+ private InputText txtPrecioProducto;
+ 
+  //combobox de Estado Producto 
+ private SelectOneMenu cmbEstadoProducto;
+ private ArrayList<SelectItem>opcionEstadoProducto;
+ 
+ //listas Productos y Categoria
+ private List<Producto> listaProductos;
+ private List<Categoria> listaCategoriap;
+ 
+ //esta linea es para el objeto seleccionado
+ private Producto selecProducto;
+ private Categoria selecCategoriap;
+ 
+ @EJB
+ private ProductoLogicaLocal productologica;
+ 
+ @EJB
+ private CategoriaLogicaLocal categorialogia;
+ 
     public ProductoVista() {
-    }
-
-    public SelectOneMenu getCmbEstadoProducto() {
-        return cmbEstadoProducto;
-    }
-
-    public void setCmbEstadoProducto(SelectOneMenu cmbEstadoProducto) {
-        this.cmbEstadoProducto = cmbEstadoProducto;
-    }
-
-    public SelectOneMenu getCmbgeneroProducto() {
-        return cmbgeneroProducto;
-    }
-
-    public void setCmbgeneroProducto(SelectOneMenu cmbgeneroProducto) {
-        this.cmbgeneroProducto = cmbgeneroProducto;
-    }
-
-    public Categoria getSelectecategoria() {
-        return selectecategoria;
-    }
-
-    public void setSelectecategoria(Categoria selectecategoria) {
-        this.selectecategoria = selectecategoria;
-    }
-
-    public InputText getTxtcodigoProducto() {
-        return txtcodigoProducto;
-    }
-
-    public void setTxtcodigoProducto(InputText txtcodigoProducto) {
-        this.txtcodigoProducto = txtcodigoProducto;
-    }
-
-    public InputText getTxtnombreProducto() {
-        return txtnombreProducto;
-    }
-
-    public void setTxtnombreProducto(InputText txtnombreProducto) {
-        this.txtnombreProducto = txtnombreProducto;
-    }
-
-    public Calendar getTxtfechaProducto() {
-        return txtfechaProducto;
-    }
-
-    public void setTxtfechaProducto(Calendar txtfechaProducto) {
-        this.txtfechaProducto = txtfechaProducto;
-    }
-
-    public InputText getTxtgeneroProducto() {
-        return txtgeneroProducto;
-    }
-
-    public void setTxtgeneroProducto(InputText txtgeneroProducto) {
-        this.txtgeneroProducto = txtgeneroProducto;
-    }
-
-    public InputText getTxtcolorProducto() {
-        return txtcolorProducto;
-    }
-
-    public void setTxtcolorProducto(InputText txtcolorProducto) {
-        this.txtcolorProducto = txtcolorProducto;
-    }
-
-    public InputText getTxtPrecioProducto() {
-        return txtPrecioProducto;
-    }
-
-    public void setTxtPrecioProducto(InputText txtPrecioProducto) {
-        this.txtPrecioProducto = txtPrecioProducto;
-    }
-
-    public InputText getTxtcodigoCategoria() {
-        return txtcodigoCategoria;
-    }
-
-    public void setTxtcodigoCategoria(InputText txtcodigoCategoria) {
-        this.txtcodigoCategoria = txtcodigoCategoria;
-    }
-
-    public SelectOneMenu getCmbCategoria() {
-        return cmbCategoria;
-    }
-
-    public void setCmbCategoria(SelectOneMenu cmbCategoria) {
-        this.cmbCategoria = cmbCategoria;
-    }
-
-    public ArrayList<SelectItem> getOpcionesProducto() {
-     /*  if(opcionesProducto==null){
-           try {
-               opcionesProducto=new ArrayList<>();
-               List<Producto> listaproductos=productologica.consultarTodo();
-               for (int i = 0; i < listaproductos.size(); i++) {
-                   opcionesProducto.add(new SelectItem(listaproductos.get(i).getCodigoProducto(),listaproductos.get(i).getGeneroProducto()));
-               }
-           } catch (Exception ex) {
-               Logger.getLogger(ProductoVista.class.getName()).log(Level.SEVERE, null, ex);
-           }
-       }*/
-        
-        return opcionesProducto;
-    }
-
-    public void setOpcionesProducto(ArrayList<SelectItem> opcionesProducto) {
-        this.opcionesProducto = opcionesProducto;
-    }
-
-    public List<Producto> getListaProductos() {
-         if(ListaProductos==null){
-            try {
-                ListaProductos = productologica.consultarTodo();
-            } catch (Exception ex) {
-                Logger.getLogger(ProductoVista.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return ListaProductos;
-    }
-
-    public void setListaProductos(List<Producto> ListaProductos) {
-        this.ListaProductos = ListaProductos;
-    }
-
-    public Producto getSelecProducto() {
-        return selecProducto;
-    }
-
-    public void setSelecProducto(Producto selecProducto) {
-        this.selecProducto = selecProducto;
     }
 
     public CommandButton getBtnRegistrar() {
@@ -226,6 +104,22 @@ private CategoriaLogicaLocal categoriaLogica;
         this.btnLimpiar = btnLimpiar;
     }
 
+    public InputText getTxtcategoria() {
+        return txtcategoria;
+    }
+
+    public void setTxtcategoria(InputText txtcategoria) {
+        this.txtcategoria = txtcategoria;
+    }
+
+    public Categoria getSelecCategoriap() {
+        return selecCategoriap;
+    }
+
+    public void setSelecCategoriap(Categoria selecCategoriap) {
+        this.selecCategoriap = selecCategoriap;
+    }
+
     public ProductoLogicaLocal getProductologica() {
         return productologica;
     }
@@ -234,65 +128,221 @@ private CategoriaLogicaLocal categoriaLogica;
         this.productologica = productologica;
     }
 
-    public CategoriaLogicaLocal getCategoriaLogica() {
-        return categoriaLogica;
+    public CategoriaLogicaLocal getCategorialogia() {
+        return categorialogia;
     }
 
-    public void setCategoriaLogica(CategoriaLogicaLocal categoriaLogica) {
-        this.categoriaLogica = categoriaLogica;
+    public void setCategorialogia(CategoriaLogicaLocal categorialogia) {
+        this.categorialogia = categorialogia;
     }
 
-    public List<Categoria> getListacategoriap() {
-     try {
-                if(listacategoriap==null){
-                listacategoriap=categoriaLogica.consultarTodo();
-                }
+    public InputText getTxtcodigoProducto() {
+        return txtcodigoProducto;
+    }
+
+    public void setTxtcodigoProducto(InputText txtcodigoProducto) {
+        this.txtcodigoProducto = txtcodigoProducto;
+    }
+
+    public InputText getTxtnombreProducto() {
+        return txtnombreProducto;
+    }
+
+    public void setTxtnombreProducto(InputText txtnombreProducto) {
+        this.txtnombreProducto = txtnombreProducto;
+    }
+
+    public Calendar getTxtfechaProducto() {
+        return txtfechaProducto;
+    }
+
+    public void setTxtfechaProducto(Calendar txtfechaProducto) {
+        this.txtfechaProducto = txtfechaProducto;
+    }
+
+    public SelectOneMenu getCmbGenero() {
+        return cmbGenero;
+    }
+
+    public void setCmbGenero(SelectOneMenu cmbGenero) {
+        this.cmbGenero = cmbGenero;
+    }
+
+    public ArrayList<SelectItem> getOpcionGenero() {
+         /*   if(opcionGenero==null)
+       {
+                 opcionGenero=new ArrayList<>();
+           try {
+               List<Producto>listap=productologica.consultarTodo();
+               for (int i = 0; i <listap.size(); i++) {
+                   opcionGenero.add(new SelectItem(listap.get(i).getCodigoProducto(),listap.get(i).getGeneroProducto()));
+               }
+           } catch (Exception ex) {
+               Logger.getLogger(ProductoVista.class.getName()).log(Level.SEVERE, null,"ERROR EN EL ARRAY LIS DE ESTADO-PRODUCTO"+ ex.getMessage());
+           }
+       }*/
+        return opcionGenero;
+    }
+
+    public void setOpcionGenero(ArrayList<SelectItem> opcionGenero) {
+        this.opcionGenero = opcionGenero;
+    }
+
+    public InputText getTxtColorProducto() {
+        return txtColorProducto;
+    }
+
+    public void setTxtColorProducto(InputText txtColorProducto) {
+        this.txtColorProducto = txtColorProducto;
+    }
+
+    public InputText getTxtPrecioProducto() {
+        return txtPrecioProducto;
+    }
+
+    public void setTxtPrecioProducto(InputText txtPrecioProducto) {
+        this.txtPrecioProducto = txtPrecioProducto;
+    }
+
+    public SelectOneMenu getCmbEstadoProducto() {
+        return cmbEstadoProducto;
+    }
+
+    public void setCmbEstadoProducto(SelectOneMenu cmbEstadoProducto) {
+        this.cmbEstadoProducto = cmbEstadoProducto;
+    }
+
+    public ArrayList<SelectItem> getOpcionEstadoProducto() {
+       if(opcionEstadoProducto==null)
+       {
+                 opcionEstadoProducto=new ArrayList<>();
+           try {
+               List<Producto>listap=productologica.consultarTodo();
+               for (int i = 0; i <listap.size(); i++) {
+                   opcionEstadoProducto.add(new SelectItem(listap.get(i).getCodigoProducto(),listap.get(i).getEstadoProducto()));
+               }
+           } catch (Exception ex) {
+               Logger.getLogger(ProductoVista.class.getName()).log(Level.SEVERE, null,"ERROR EN EL ARRAY LIS DE ESTADO-PRODUCTO"+ ex.getMessage());
+           }
+       }
+        return opcionEstadoProducto;
+    }
+
+    public void setOpcionEstadoProducto(ArrayList<SelectItem> opcionEstadoProducto) {
+        this.opcionEstadoProducto = opcionEstadoProducto;
+    }
+
+    public List<Producto> getListaProductos() {
+        if (listaProductos == null) {
+           
+            try {
+                listaProductos = productologica.consultarTodo();
             } catch (Exception ex) {
-                Logger.getLogger(CategoriaVista.class.getName()).log(Level.SEVERE, null, ex.getMessage());
-            }
-        
-        return listacategoriap;
+                Logger.getLogger(ProductoVista.class.getName()).log(Level.SEVERE, null,"ERROR LISTA PRODUCTO"+ex.getMessage());
+            } 
+        }
+        return listaProductos;
     }
 
-    public void setListacategoriap(List<Categoria> listacategoriap) {
-        this.listacategoriap = listacategoriap;
+    public void setListaProductos(List<Producto> listaProductos) {
+        this.listaProductos = listaProductos;
+    }
+
+    public List<Categoria> getListaCategoriap() {
+         try {
+            if (listaCategoriap == null) {
+                listaCategoriap = categorialogia.consultarTodo();
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(CategoriaVista.class.getName()).log(Level.SEVERE, null,"ERROR LISTA CATEGORIA"+ ex.getMessage());
+        }
+        return listaCategoriap;
+    }
+
+    public void setListaCategoriap(List<Categoria> listaCategoriap) {
+        this.listaCategoriap = listaCategoriap;
+    }
+
+    public Producto getSelecProducto() {
+        return selecProducto;
+    }
+
+    public void setSelecProducto(Producto selecProducto) {
+        this.selecProducto = selecProducto;
+    }
+
+    public Categoria getSelecCategoria() {
+        return selecCategoriap;
+    }
+
+    public void setSelecCategoria(Categoria selecCategoria) {
+        this.selecCategoriap = selecCategoria;
     }
     
-     public void accion_registrar(){
+      public void accion_registrar() {
         try {
             Producto nuevoProducto = new Producto();
             Categoria nuevaCategoria = new Categoria();
             nuevoProducto.setCodigoProducto(Integer.parseInt(txtcodigoProducto.getValue().toString()));
-            nuevoProducto.setNombreProducto(txtnombreProducto.getValue().toString());
-            nuevoProducto.setFechaIngresoProducto((Date)txtfechaProducto.getValue());
-            nuevoProducto.setGeneroProducto(cmbgeneroProducto.getValue().toString());
-             nuevoProducto.setEstadoProducto(cmbEstadoProducto.getValue().toString());
-            nuevoProducto.setColorProducto(txtcolorProducto.getValue().toString());
+            nuevoProducto.setNombreProducto(txtnombreProducto.getValue().toString()); 
+            nuevoProducto.setFechaIngresoProducto((Date) txtfechaProducto.getValue());
+            nuevoProducto.setGeneroProducto(cmbGenero.getValue().toString());
+            nuevoProducto.setEstadoProducto(cmbEstadoProducto.getValue().toString());
+            nuevoProducto.setColorProducto(txtColorProducto.getValue().toString());
             nuevoProducto.setPrecioProducto(Double.parseDouble(txtPrecioProducto.getValue().toString()));
-            nuevaCategoria.setCodigoCategoria(Integer.parseInt(txtcodigoCategoria.getValue().toString()));
+            nuevaCategoria.setCodigoCategoria(Integer.parseInt(txtcategoria.getValue().toString()));
             nuevoProducto.setCodigoCategoria(nuevaCategoria);
-           
- 
+
             productologica.crear(nuevoProducto);
-           // limpiar();
-            ListaProductos =null;
+            // limpiar();
+            listaProductos = null;
         } catch (Exception ex) {
-            Logger.getLogger(ProductoVista.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductoVista.class.getName()).log(Level.SEVERE, null,"ERROR HACIENDO EL REGISTRO" +ex.getMessage());
         }
     }
-     public void limpiar(){
-         txtcodigoCategoria.setValue("");
-         txtnombreProducto.setValue("");
-         txtfechaProducto.setValue("");
-         cmbgeneroProducto.setValue("seleccione");
-         txtcolorProducto.setValue("");
-         txtPrecioProducto.setValue("");
-         txtcodigoCategoria.setValue("");
-         cmbEstadoProducto.setValue("seleccione");
-     }
-public void seleccionFila(SelectEvent evt){
-    Categoria objeCategoria=selectecategoria;
-    txtcodigoCategoria.setValue(objeCategoria.getCodigoCategoria());
-    listacategoriap=null;
-}
+       public void seleccionFila(SelectEvent evt) {
+        Categoria objeCategoria = selecCategoriap;
+        txtcategoria.setValue(objeCategoria.getCodigoCategoria());
+        listaCategoriap = null;
+    }
+         public void seleccionFilaProducto(SelectEvent evt) {
+        Producto objetoProducto = selecProducto;
+        txtcodigoProducto.setValue(objetoProducto.getCodigoProducto());
+        txtnombreProducto.setValue(objetoProducto.getNombreProducto());
+        txtfechaProducto.setValue((Date) objetoProducto.getFechaIngresoProducto());
+        cmbGenero.setValue(objetoProducto.getGeneroProducto());
+        cmbGenero.setLabel(objetoProducto.getGeneroProducto());
+        txtColorProducto.setValue(objetoProducto.getColorProducto());
+        txtPrecioProducto.setValue(objetoProducto.getPrecioProducto());
+        txtcategoria.setValue(objetoProducto.getCodigoCategoria().getCodigoCategoria());
+        cmbEstadoProducto.setValue(objetoProducto.getEstadoProducto());
+        btnRegistrar.setDisabled(true);
+        btnModificar.setDisabled(false);
+        btnEliminar.setDisabled(false);
+        txtcategoria.setDisabled(true);
+        listaProductos = null;
+      /*  
+        SelectItem genero;
+        List<SelectItem>listagenero=new ArrayList<>();
+         
+        genero=new SelectItem();
+        genero.setLabel(objetoProducto.getGeneroProducto());
+        genero.setValue(objetoProducto.getGeneroProducto());
+        listagenero.add(genero);
+        combtipogeneros=listagenero;
+              */
+        
+    }
+           public void limpiar() {
+        txtcodigoProducto.setValue("");
+        txtnombreProducto.setValue("");
+        txtfechaProducto=null;
+        txtfechaProducto.setValue("");
+        cmbGenero.setValue("seleccione");
+        cmbEstadoProducto.setValue("seleccione");
+        txtColorProducto.setValue("");
+        txtPrecioProducto.setValue("");
+        txtcategoria.setValue("");
+        
+    }
 }

@@ -1,10 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
@@ -15,7 +9,7 @@ and open the template in the editor.
         <h:head>
             <f:facet name="first">
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-                <title>TEXTILESDUQUE/CIUDAD</title>
+                <title>TEXTILESDUQUE/PRODUCTOS</title>
             </f:facet>
         </h:head>
 
@@ -34,7 +28,7 @@ and open the template in the editor.
                 <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
                     <p:menu>
                         <p:submenu label="Resources">
-                            <p:menuitem value="CATEGORIA" url="http://localhost:8080/Proyecto/faces/gestionCategoria.xhtml" />
+                            <p:menuitem value="Ciudad" url="http://localhost:8080/Proyecto/faces/gestionCiudad.xhtml" />
                             <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
                             <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
                             <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
@@ -45,12 +39,13 @@ and open the template in the editor.
                 </p:layoutUnit>
 
                 <p:layoutUnit position="center">
+
                     <h:form id="formulario">
 
                         <p:panelGrid>
                             <p:row>
                                 <p:column>
-                                     <h:outputLabel value="Codigo Producto" />
+                                    <h:outputLabel value="Codigo Producto" />
                                 </p:column>
                                 <p:column>
                                     <p:inputText id="txtCodigo" binding="#{productoVistav.txtcodigoProducto}"/>
@@ -61,7 +56,7 @@ and open the template in the editor.
                                 <p:column>
                                     <p:inputText id="txtnombre" binding="#{productoVistav.txtnombreProducto}"/>
                                 </p:column>
-                                 <p:column>
+                                <p:column>
                                     <h:outputLabel  value="Fecha Producto"/>
                                 </p:column>
                                 <p:column style="word-spacing: 10px">
@@ -73,28 +68,32 @@ and open the template in the editor.
                                     <h:outputLabel  value="Genero Producto"/>
                                 </p:column>
                                 <p:column>
-                                    <p:selectOneMenu id="cmbproducto" binding="#{productoVistav.cmbgeneroProducto}">
-                                        <f:selectItem itemValue="seleccione" itemLabel="seleccione"/>
+                                    <p:selectOneMenu id="cmbgenero" binding="#{productoVistav.cmbGenero}">
+                                         <f:selectItem itemValue="seleccione" itemLabel="seleccione"/>
                                        <f:selectItem itemValue="Caballero" itemLabel="Caballero"/>
                                        <f:selectItem itemValue="Dama" itemLabel="Dama"/>
                                        <f:selectItem itemValue="Niño" itemLabel="Niño"/>
-                                        <f:selectItem itemValue="Niña" itemLabel="Niña"/>
+                                       <f:selectItem itemValue="Niña" itemLabel="Niña"/>
+
                                     </p:selectOneMenu>
-                                    
+
                                 </p:column>
                                  <p:column>
-                                     <p:selectOneMenu id="cmbEstadoProducto" binding="#{productoVistav.cmbEstadoProducto}">
+                                    <h:outputLabel  value="Estado Producto"/>
+                                </p:column>
+                                <p:column>
+                                   <p:selectOneMenu id="cmbEstadoProducto" binding="#{productoVistav.cmbEstadoProducto}">
                                         <f:selectItem itemValue="seleccione" itemLabel="seleccione"/>
                                        <f:selectItem itemValue="Activo" itemLabel="Activo"/>
                                        <f:selectItem itemValue="Inativo" itemLabel="Inativo"/>
                                     </p:selectOneMenu>
-                                    
+
                                 </p:column>
                                 <p:column>
                                     <h:outputLabel  value="Color Producto"/>
                                 </p:column>
                                 <p:column>
-                                     <p:inputText id="txtColor" binding="#{productoVistav.txtcolorProducto}"/>
+                                    <p:inputText id="txtColor" binding="#{productoVistav.txtColorProducto}"/>
                                 </p:column>                                
                             </p:row>
                             <p:row>
@@ -102,61 +101,58 @@ and open the template in the editor.
                                     <h:outputLabel  value="Precio Producto"/>
                                 </p:column>
                                 <p:column>
-                                     <p:inputText id="txtprecio" binding="#{productoVistav.txtPrecioProducto}"/>
+                                    <p:inputText id="txtprecio" binding="#{productoVistav.txtPrecioProducto}"/>
                                 </p:column>
                                 <p:column>
                                     <h:outputLabel  value="Codigo Categoria"/>
                                 </p:column>
                                 <p:column>
-                                     <p:inputText id="txtcategoria" binding="#{productoVistav.txtcodigoCategoria}"/>                            
-                            <p:commandButton id="movieBtn" value="..." type="button" />
-                             <p:overlayPanel id="moviePanel" for="movieBtn" hideEffect="fade" dynamic="true" style="width:600px">
-                                <p:dataTable var="categoria" value="#{productoVistav.listacategoriap}" rows="5" paginator="true"
-                                             selectionMode="single"
-                                             selection="#{productoVistav.selectecategoria}"
-                                             rowKey="#{categoria.codigoCategoria}">
-                                    <p:ajax event="rowSelect" listener="#{productoVistav.seleccionFila}" update=":formulario:txtcategoria" />
 
-                                    <p:column headerText="Codigo categoria">
-                                        <h:outputText value="#{categoria.codigoCategoria}" />
-                                    </p:column>
+                                    <p:inputText id="txtcategoria" binding="#{productoVistav.txtcategoria}"/>                            
+                                    <p:commandButton id="movieBtn" value="..." type="button" />
+                                    <p:overlayPanel id="moviePanel" for="movieBtn" hideEffect="fade" dynamic="true" style="width:600px">
+                                        <p:dataTable var="categoria" value="#{productoVistav.listaCategoriap}" rows="5" paginator="true"
+                                                     selectionMode="single"
+                                                     selection="#{productoVistav.selecCategoriap}"
+                                                     rowKey="#{categoria.codigoCategoria}">
+                                            <p:ajax event="rowSelect" listener="#{productoVistav.seleccionFila}" update=":formulario:txtcategoria" />
 
-                                    <p:column headerText="Nombre Categoria">
-                                        <h:outputText value="#{categoria.nombreCategoria}" />
-                                    </p:column>
-                                </p:dataTable>
-                            </p:overlayPanel>
+                                            <p:column headerText="Codigo categoria">
+                                                <h:outputText value="#{categoria.codigoCategoria}" />
+                                            </p:column>
+
+                                            <p:column headerText="Nombre Categoria">
+                                                <h:outputText value="#{categoria.nombreCategoria}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:overlayPanel>
                                 </p:column>
                             </p:row>
-   
-                           <!--BOTONES-->
-                           <p:row>
-                               <p:column>
-                             <p:commandButton value="REGISTRAR" binding="#{productoVistav.btnRegistrar}" action="#{productoVistav.accion_registrar}" update="formulario"/>
-                               </p:column>
-                               <p:column>
-                                   <p:commandButton value="MODIFICAR" binding="#{ciudadVistav.btnModificar}" action="#{ciudadVistav.accion_modificar()}" update="formulario"/>
-                               </p:column>
-                               <p:column>
-                                   <p:commandButton value="ELIMINAR" binding="#{ciudadVistav.btnEliminar}" action="#{ciudadVistav.accion_eliminar()}" update="formulario"/>
-                               </p:column>
-                               <p:column>
-                                   <p:commandButton value="LIMPIAR" binding="#{ciudadVistav.btnLimpiar}" action="#{ciudadVistav.limpiar()}" update="formulario"/>
-                               </p:column>
-                           </p:row>
- 
-                            
-                            
-                            
-                                
+
+                            <!--BOTONES-->
+                            <p:row>
+                                <p:column>
+                                    <p:commandButton value="REGISTRAR" binding="#{productoVistav.btnRegistrar}" action="#{productoVistav.accion_registrar}" update="formulario"/>
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton value="MODIFICAR" binding="#{productoVistav.btnModificar}" action="#{productoVistav.accion_modificar}" update="formulario"/>
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton value="ELIMINAR" binding="#{productoVistav.btnEliminar}" action="#{productoVistav.accion_eliminar()}" update="formulario"/>
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton value="LIMPIAR" binding="#{productoVistav.btnLimpiar}" action="#{productoVistav.limpiar()}" update="formulario"/>
+                                </p:column>
+                            </p:row>
                         </p:panelGrid>
-                         <!--TABLA-->
+                     
+                        <!--TABLA-->
                          <p:dataTable id="tablaproducto" var="producto" value="#{productoVistav.listaProductos}" widgetVar="producto"
                                       emptyMessage="No cars found with given criteria" filteredValue="#{productoVistav.listaProductos}"
                                      selectionMode="single"
                                      selection="#{productoVistav.selecProducto}"
                                      rowKey="#{producto.codigoProducto}">
-                             <p:ajax event="rowSelect" listener="#{productoVistav.seleccionFila(evt)}" update=":formulario:tablaproducto" />
+                             <p:ajax event="rowSelect" listener="#{productoVistav.seleccionFilaProducto}" update=":formulario" />
 
                             <f:facet name="header">
                                 <p:outputPanel>
@@ -184,6 +180,9 @@ and open the template in the editor.
                              <p:column headerText="PRECIO PRODUCTO">
                                  <h:outputText value="#{producto.precioProducto}" />
                             </p:column>
+                              <p:column headerText="CODIGO CATEGORIA">
+                                  <h:outputText value="#{producto.codigoCategoria.codigoCategoria}" />
+                            </p:column>
                              <p:column headerText="ESTADO PRODUCTO">
                                  <h:outputText value="#{producto.estadoProducto}" />
                             </p:column>
@@ -200,5 +199,4 @@ and open the template in the editor.
 
     </f:view>
 </html>
-
 
