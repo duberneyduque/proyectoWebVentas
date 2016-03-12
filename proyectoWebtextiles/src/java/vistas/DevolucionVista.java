@@ -21,8 +21,10 @@ import logica.ClienteLogicaLocal;
 import logica.DevolucionLogicaLocal;
 import modelo.Cliente;
 import modelo.Devolucion;
+import org.primefaces.component.calendar.Calendar;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.inputtext.InputText;
+import org.primefaces.component.inputtextarea.InputTextarea;
 import org.primefaces.component.selectonemenu.SelectOneMenu;
 import org.primefaces.event.SelectEvent;
 
@@ -35,30 +37,31 @@ import org.primefaces.event.SelectEvent;
 public class DevolucionVista {
 
 private InputText txtCodigoDevolucion;
-private InputText txtFechaDevolucion;
-private InputText txtObservacionesDevolucion;
-private InputText txtCedulacliente;
-private SelectOneMenu cmbCliente;
- private ArrayList<SelectItem> opcionesCliente;
+private Calendar txtFecha;
+private InputTextarea txtobservaciones;
+private InputText txtCedulaCliente;
+private Cliente selecteClienteD;
+private Devolucion selecteDevolucionD;
+
+//LISTADO
+private List<Devolucion>listaDevolucion;
+private List<Cliente>listaClientes;
+
+//BOTONES
 private CommandButton btnRegistrar;
 private CommandButton btnModificar;
 private CommandButton btnLimpiar;
 private CommandButton btnEliminar;
-private List<Devolucion> listaDevolucion;
-private List<Cliente> listaCliente;
-private List<Cliente> listaClienteSeleccionadas;
-private Devolucion selectedDevolucion;
-private Cliente selectedcliente;
-   
-@EJB
-private DevolucionLogicaLocal devolucionlogica;
 
+@EJB 
+private DevolucionLogicaLocal devolucionLogica;
 @EJB
 private ClienteLogicaLocal clienteLogica;
 
-    public DevolucionVista() {
+ public DevolucionVista() {
     }
-     public InputText getTxtCodigoDevolucion() {
+//GET Y SET
+    public InputText getTxtCodigoDevolucion() {
         return txtCodigoDevolucion;
     }
 
@@ -66,52 +69,75 @@ private ClienteLogicaLocal clienteLogica;
         this.txtCodigoDevolucion = txtCodigoDevolucion;
     }
 
-    public InputText getTxtFechaDevolucion() {
-        return txtFechaDevolucion;
+    public Calendar getTxtFecha() {
+        return txtFecha;
     }
 
-    public void setTxtFechaDevolucion(InputText txtFechaDevolucion) {
-        this.txtFechaDevolucion = txtFechaDevolucion;
+    public void setTxtFecha(Calendar txtFecha) {
+        this.txtFecha = txtFecha;
     }
 
-    public InputText getTxtObservacionesDevolucion() {
-        return txtObservacionesDevolucion;
+    public InputTextarea getTxtobservaciones() {
+        return txtobservaciones;
     }
 
-    public void setTxtObservacionesDevolucion(InputText txtObservacionesDevolucion) {
-        this.txtObservacionesDevolucion = txtObservacionesDevolucion;
+    public void setTxtobservaciones(InputTextarea txtobservaciones) {
+        this.txtobservaciones = txtobservaciones;
     }
 
-    public InputText getTxtCedulacliente(){
-       return txtCedulacliente;
-    }
-    public void setTxCedulacliente(InputText txtCedulacliente){
-        this.txtCedulacliente = txtCedulacliente;
-    }
-    
-    public SelectOneMenu getCmbCliente() {
-        return cmbCliente;
+    public InputText getTxtCedulaCliente() {
+        return txtCedulaCliente;
     }
 
-    public void setCmbCliente(SelectOneMenu cmbCliente) {
-        this.cmbCliente = cmbCliente;
+    public void setTxtCedulaCliente(InputText txtCedulaCliente) {
+        this.txtCedulaCliente = txtCedulaCliente;
     }
-      public ArrayList<SelectItem> getOpcionesCliente() {
-        if(opcionesCliente==null){
-            try {
-                opcionesCliente = new ArrayList<>();
-                List<Cliente> listaclieClientes = clienteLogica.findAll();
-                for (int i = 0; i < listaclieClientes.size(); i++) {
-                    opcionesCliente.add(new SelectItem(listaclieClientes.get(i).getCedulaCliente(), listaclieClientes.get(i).getNombreCliente()));
-                }
-            } catch (Exception ex) {
-                Logger.getLogger(DevolucionVista.class.getName()).log(Level.SEVERE, null, ex);
+
+    public Cliente getSelecteClienteD() {
+        return selecteClienteD;
+    }
+
+    public void setSelecteClienteD(Cliente selecteClienteD) {
+        this.selecteClienteD = selecteClienteD;
+    }
+
+    public Devolucion getSelecteDevolucionD() {
+        return selecteDevolucionD;
+    }
+
+    public void setSelecteDevolucionD(Devolucion selecteDevolucionD) {
+        this.selecteDevolucionD = selecteDevolucionD;
+    }
+
+    public List<Devolucion> getListaDevolucion() {
+        if(listaDevolucion==null){
+            try{
+            listaDevolucion=devolucionLogica.consultar();
+            }catch(Exception ex){
+                Logger.getLogger(DevolucionVista.class.getName()).log(Level.SEVERE, null,"error de lista"+ ex.getMessage());
             }
-            
         }
-        return opcionesCliente;
+        return listaDevolucion;
     }
 
+    public void setListaDevolucion(List<Devolucion> listaDevolucion) {
+        this.listaDevolucion = listaDevolucion;
+    }
+
+    public List<Cliente> getListaClientes() {
+          if(listaClientes==null){
+            try{
+            listaClientes=clienteLogica.findAll();
+            }catch(Exception ex){
+                Logger.getLogger(DevolucionVista.class.getName()).log(Level.SEVERE, null,"error de lista"+ ex.getMessage());
+            }
+        }
+        return listaClientes;
+    }
+
+    public void setListaClientes(List<Cliente> listaClientes) {
+        this.listaClientes = listaClientes;
+    }
 
     public CommandButton getBtnRegistrar() {
         return btnRegistrar;
@@ -145,44 +171,34 @@ private ClienteLogicaLocal clienteLogica;
         this.btnEliminar = btnEliminar;
     }
 
-    public List<Devolucion> getListaDevolucion() {
-        if(listaDevolucion== null){
-            try {
-                listaDevolucion=devolucionlogica.findAll();
-            } catch (Exception ex) {
-                Logger.getLogger(DevolucionVista.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return listaDevolucion;
+    public DevolucionLogicaLocal getDevolucionLogica() {
+        return devolucionLogica;
     }
 
-    public void setListaDevolucion(List<Devolucion> listaDevolucions) {
-        this.listaDevolucion = listaDevolucions;
+    public void setDevolucionLogica(DevolucionLogicaLocal devolucionLogica) {
+        this.devolucionLogica = devolucionLogica;
     }
 
-    public Devolucion getSelectedDevolucion() {
-        return selectedDevolucion;
+    public ClienteLogicaLocal getClienteLogica() {
+        return clienteLogica;
     }
 
-    public void setSelectedDevolucion(Devolucion selectedDevolucion) {
-        this.selectedDevolucion = selectedDevolucion;
-    }
-    public Cliente getSelectedCliente(){
-        return selectedcliente;
-    }
-    public void setSelectedCliente (Cliente selectedCliente){
-        this.selectedcliente = selectedCliente;
+    public void setClienteLogica(ClienteLogicaLocal clienteLogica) {
+        this.clienteLogica = clienteLogica;
     }
     
-     public void accion_registrar() {
+ //LOS METODOS PARA SER LLAMOS EN LAS PAGINAS WEB
+    
+    public void accion_registrar() {
         try {
             Devolucion nuevaDevolucion = new Devolucion();
             Cliente nuevocliente = new Cliente();
-            nuevaDevolucion.setCodigoDevolucion(Integer.parseInt(txtCodigoDevolucion.getValue().toString()));
-            nuevaDevolucion.setFechaDevolucion((Date)txtFechaDevolucion.getValue());
-            nuevaDevolucion.setObservacionDevolucion(txtObservacionesDevolucion.getValue().toString());
-            nuevocliente.setCedulaCliente(Long.parseLong(txtCedulacliente.getValue().toString()));
-           devolucionlogica.create(nuevaDevolucion);
+            nuevaDevolucion.setCodigoDevolucion(Integer.parseInt(txtCodigoDevolucion.getValue().toString().toUpperCase()));
+            nuevaDevolucion.setFechaDevolucion((Date)txtFecha.getValue());
+            nuevaDevolucion.setObservacionDevolucion(txtobservaciones.getValue().toString().toUpperCase());
+            nuevocliente.setCedulaCliente(Long.parseLong(txtCedulaCliente.getValue().toString()));
+            nuevaDevolucion.setCedulaCliente(nuevocliente);
+           devolucionLogica.create(nuevaDevolucion);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "La Devolucion  se a registro correctamente"));
             listaDevolucion = null;
         } catch (NumberFormatException ex) {
@@ -194,81 +210,28 @@ private ClienteLogicaLocal clienteLogica;
 
     public void limpiar() {
         txtCodigoDevolucion.setValue("");
-        txtFechaDevolucion.setValue("");
-        txtObservacionesDevolucion.setValue("");
-        txtCedulacliente.setValue("");
+        txtFecha.setValue("");
+        txtobservaciones.setValue("");
+        txtCedulaCliente.setValue("");
         btnRegistrar.setDisabled(false);
         btnModificar.setDisabled(true);
         btnEliminar.setDisabled(true);
     }
-    
-    public void seleccionar(SelectEvent e){
-        Devolucion d = selectedDevolucion;
-        Cliente c = selectedcliente;
-        txtCodigoDevolucion.setValue(d.getCodigoDevolucion()+"");
-        txtFechaDevolucion.setValue(d.getFechaDevolucion());
-        txtObservacionesDevolucion.setValue(d.getObservacionDevolucion());
-        txtCedulacliente.setValue(c.getCedulaCliente());
-        btnModificar.setDisabled(false);
-        btnEliminar.setDisabled(false);
-        btnRegistrar.setDisabled(true);
-    }
-      public void onRowSelect(SelectEvent evt){
-        Devolucion m = selectedDevolucion;
-        txtCodigoDevolucion.setValue(m.getCodigoDevolucion());
-        txtFechaDevolucion.setValue(m.getFechaDevolucion());
-        txtObservacionesDevolucion.setValue(m.getObservacionDevolucion());
-        cmbCliente.setValue(m.getCedulaCliente().getCedulaCliente());
+     public void seleccionFilaDevolucion(SelectEvent evt){
+        Devolucion d = selecteDevolucionD;
+        txtCodigoDevolucion.setValue(d.getCodigoDevolucion());
+        txtFecha.setValue(d.getFechaDevolucion());
+        txtobservaciones.setValue(d.getObservacionDevolucion());
+        txtCedulaCliente.setValue(d.getCedulaCliente().getCedulaCliente());
         btnRegistrar.setDisabled(true);
         btnModificar.setDisabled(false);
         btnEliminar.setDisabled(false);
         txtCodigoDevolucion.setDisabled(true);
+        listaDevolucion=null;
     }
-    
-    public void modificar(){
-    try {
-        Devolucion nuevaDevolucion = new Devolucion();
-        Cliente nuevocliente = new Cliente();
-        nuevaDevolucion.setCodigoDevolucion(Integer.parseInt(txtCodigoDevolucion.getValue().toString()));
-        nuevaDevolucion.setFechaDevolucion((Date)txtFechaDevolucion.getValue());
-        nuevaDevolucion.setObservacionDevolucion(txtObservacionesDevolucion.getValue().toString());
-        nuevocliente.setCedulaCliente(Long.parseLong(txtCedulacliente.getValue().toString()));
-        nuevaDevolucion.setClienteList(listaClienteSeleccionadas);
-        devolucionlogica.edit(nuevaDevolucion);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "La devolucion se  modifico correctamente"));
-        listaDevolucion = null;
-    } catch (Exception ex) {
-        Logger.getLogger(DevolucionVista.class.getName()).log(Level.SEVERE, null, ex);
+ public void seleccionFilaCliente(SelectEvent evt) {
+        Cliente objeCliente = selecteClienteD;
+        txtCedulaCliente.setValue(objeCliente.getCedulaCliente());
+        listaClientes= null;
     }
-    }
-     
-    public void eliminar(){
-        try {
-            Devolucion m = new Devolucion();
-            m.setCodigoDevolucion(Integer.parseInt(txtCodigoDevolucion.getValue().toString()));            
-            devolucionlogica.remove(m);
-             limpiar();
-            listaDevolucion =null;
-            FacesContext.getCurrentInstance().addMessage("Mensaje", new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "la devolucion  se eliminó con Éxito"));
-        } catch (Exception ex) {
-            Logger.getLogger(ClienteVista.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    
-    }
-
-    public List<Cliente> getListaCliente() {
-        if(listaCliente==null){
-            try {
-                listaCliente = clienteLogica.findAll();
-            } catch (Exception ex) {
-                Logger.getLogger(DevolucionVista.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return listaCliente;
-    }
-
-    public void setListaClienteSeleccionadas(List<Cliente> listaClienteSeleccionadas) {
-        this.listaClienteSeleccionadas = listaClienteSeleccionadas;
-    }
-    
 }

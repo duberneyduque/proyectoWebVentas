@@ -13,8 +13,7 @@
             </f:facet>
         </h:head>
 
-        <h:body>
-
+        <h:body style="font-size: 12px;">
             <p:layout fullPage="true">
 
                 <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
@@ -44,6 +43,7 @@
 
                     <h:form id="formulario">
                         <p:growl id="growl" showDetail="true" sticky="true" />
+                        <p:panel   header="Productos">
                         <p:panelGrid>
                             <p:row>
                                 <p:column>
@@ -112,12 +112,12 @@
 
                                     <p:inputText id="txtcategoria" binding="#{productoVistav.txtcategoria}"/>                            
                                     <p:commandButton id="movieBtn" value="..." type="button" />
-                                    <p:overlayPanel id="moviePanel" for="movieBtn" hideEffect="fade" dynamic="true" style="width:600px">
+                                    <p:overlayPanel id="moviePanel" widgetVar="moviePanel" for="movieBtn" hideEffect="fade" dynamic="true" style="width:600px">
                                         <p:dataTable var="categoria" value="#{productoVistav.listaCategoriap}" rows="5" paginator="true"
                                                      selectionMode="single"
                                                      selection="#{productoVistav.selecCategoriap}"
                                                      rowKey="#{categoria.codigoCategoria}">
-                                            <p:ajax event="rowSelect" listener="#{productoVistav.seleccionFila}" update=":formulario:txtcategoria" />
+                                            <p:ajax event="rowSelect" listener="#{productoVistav.seleccionFila}" oncomplete="PF('moviePanel').hide();" update=":formulario:txtcategoria" />
 
                                             <p:column headerText="Codigo categoria">
                                                 <h:outputText value="#{categoria.codigoCategoria}" />
@@ -147,7 +147,7 @@
                                 </p:column>
                             </p:row>
                         </p:panelGrid>
-
+</p:panel>
                         <!--TABLA-->
                         <p:dataTable id="tablaproducto" var="producto" value="#{productoVistav.listaProductos}" widgetVar="producto"
                                      emptyMessage="No cars found with given criteria" filteredValue="#{productoVistav.listaProductos}"

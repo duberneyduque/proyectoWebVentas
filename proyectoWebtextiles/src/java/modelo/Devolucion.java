@@ -73,7 +73,7 @@ public class Devolucion implements Serializable {
     }
 
     public Date getFechaDevolucion() {
-        return fechaDevolucion;
+        return new java.sql.Date(fechaDevolucion.getTime());
     }
 
     public void setFechaDevolucion(Date fechaDevolucion) {

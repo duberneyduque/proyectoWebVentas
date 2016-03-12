@@ -21,6 +21,4 @@ public interface DevolucionLogicaLocal {
     public List<Devolucion> consultar() throws Exception;
     public Devolucion consultarPorcodigoDevolucion (Integer codigodevolucion) throws Exception;
     public List<Devolucion> consultarDevolucionCliente (Long cedulacliente) throws Exception;
-
-    public List<Devolucion> findAll();
 }
