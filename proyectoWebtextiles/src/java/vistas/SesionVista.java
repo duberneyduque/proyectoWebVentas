@@ -29,7 +29,6 @@ import org.primefaces.component.password.Password;
 public class SesionVista {
     @EJB
     private SessionLogicaLocal sesionLogica;
-    
     private InputText txtUsuario;
     private Password txtclave;
     private CommandButton btnIngresar;
@@ -74,26 +73,27 @@ public class SesionVista {
         ExternalContext extcontex =contex.getExternalContext();
         String urlA=""; String urlV="";
       try {
-          urlA = extcontex.encodeActionURL(contex.getApplication().getViewHandler().getActionURL(contex,"/gestionInforme.xhtml"));
-          urlV = extcontex.encodeActionURL(contex.getApplication().getViewHandler().getActionURL(contex,"/gestionMonitor.xhtml"));
+          urlA = extcontex.encodeActionURL(contex.getApplication().getViewHandler().getActionURL(contex,"/gestionProducto.xhtml"));
+          urlV = extcontex.encodeActionURL(contex.getApplication().getViewHandler().getActionURL(contex,"/gestionProducto.xhtml"));
           Integer documento = Integer.parseInt(txtUsuario.getValue().toString());
           String clave = txtclave.getValue().toString();
-          Usuario vendendorlogeado = sesionLogica.iniciarSesionVendedor(documento, clave);
+          String tipoUsuario="";
+          Usuario vendendorlogeado = sesionLogica.iniciarSesionVendedor(documento,clave,tipoUsuario);
           Usuario administradorlogeado = null;
           if (vendendorlogeado==null){
-             administradorlogeado = sesionLogica.iniciarSesionAdministrador(documento, clave);
+             administradorlogeado = sesionLogica.iniciarSesionAdministrador(documento,clave,tipoUsuario);
              if (administradorlogeado==null){
                  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"error","el usuario no existe"));
              }else{
                  // funcionari administrador
                  extcontex.getSessionMap().put("Usuario",administradorlogeado);
-                  extcontex.getSessionMap().put("tipo", "funcionario");
+                  extcontex.getSessionMap().put("tipo", "administrador");
                   extcontex.redirect(urlA);
              }
           }else {
                  // vendedor logeado
               extcontex.getSessionMap().put("Usuario", vendendorlogeado);
-                  extcontex.getSessionMap().put("tipo", "monitor");
+                  extcontex.getSessionMap().put("tipo", "vendedor");
                   extcontex.redirect(urlV);
           }
       } catch (Exception ex) {
@@ -107,7 +107,7 @@ public class SesionVista {
             ExternalContext extContext= context.getExternalContext();
             extContext.getSessionMap().remove("tipo");
             extContext.getSessionMap().remove("usuario");
-            String url=extContext.encodeActionURL(context.getApplication().getViewHandler().getActionURL(context,"/index.xhtml"));
+            String url=extContext.encodeActionURL(context.getApplication().getViewHandler().getActionURL(context,"/gestionLogeo.xhtml"));
             extContext.redirect(url);
         } catch (IOException ex) {
             Logger.getLogger(SesionVista.class.getName()).log(Level.SEVERE, null, ex);

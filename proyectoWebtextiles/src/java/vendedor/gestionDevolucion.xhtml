@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>TEXTILESDUQUE/PRODUCTOS</title>
+            </f:facet>
+        </h:head>
+
+        <h:body style="font-size: 12px;">
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                    GESTION DE DEVOLUCION
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
+                    TEXTILES DUQUE
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
+                    <h:form>
+                        <p:menu>
+                            <p:submenu label="Resources">
+                                <p:menuitem value="Ciudad" url="http://localhost:8080/Proyecto/faces/gestionCiudad.xhtml" />
+                                <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
+                                <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
+                                <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
+
+                            </p:submenu>
+
+                        </p:menu>
+                    </h:form>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+
+                    <h:form id="formulario">
+                        <p:growl id="growl" showDetail="true" sticky="true" />
+                        <!--TITULO DEL FORMULARIO-->
+                        <p:panel   header="Devolucion">
+                            <!--FORMULARIO-->
+                            <p:panelGrid>
+                                <p:row>
+                                    <p:column>
+                                        <h:outputLabel value="Codigo" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText id="txtCodigo" binding="#{DevolucionVista.txtCodigoDevolucion}" size="5" />
+                                    </p:column>
+                                    <p:column>
+                                        <h:outputLabel  value="Fecha"/>
+                                    </p:column>
+                                    <p:column >
+                                        <p:calendar id="txtfecha" binding="#{DevolucionVista.txtFecha}" size="6" />
+                                    </p:column>
+                                    <!--TABLA DE CLIENTE-->
+                                     <p:column>
+                                    <h:outputLabel  value="Cedula Cliente"/>
+                                    </p:column>
+                                <p:column>
+
+                                    <p:inputText id="txtcategoria" binding="#{DevolucionVista.txtCedulaCliente}"/>                            
+                                    <p:commandButton id="movieBtn" value="..." type="button" />
+                                    <p:overlayPanel id="moviePanel" widgetVar="moviePanel" for="movieBtn" hideEffect="fade" dynamic="true" style="width:600px">
+                                        <p:dataTable var="cliente" value="#{DevolucionVista.listaClientes}" rows="5" paginator="true"
+                                                     selectionMode="single"
+                                                     selection="#{DevolucionVista.selecteClienteD}"
+                                                     rowKey="#{cliente.cedulaCliente}">
+                                            <p:ajax event="rowSelect" listener="#{DevolucionVista.seleccionFilaCliente}" oncomplete="PF('moviePanel').hide();" update=":formulario:txtcategoria" />
+
+                                            <p:column headerText="Cedula cliente">
+                                                <h:outputText value="#{cliente.cedulaCliente}" />
+                                            </p:column>
+
+                                            <p:column headerText="Nombre Cliente">
+                                                <h:outputText value="#{cliente.nombreCliente}" />
+                                            </p:column>
+                                            <p:column headerText="Direccion Cliente">
+                                                <h:outputText value="#{cliente.direccionCliente}" />
+                                            </p:column>
+                                            <p:column headerText="correo Cliente">
+                                                <h:outputText value="#{cliente.correoCliente}" />
+                                            </p:column>
+                                            <p:column headerText="Celular Cliente">
+                                                <h:outputText value="#{cliente.celularCliente}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:overlayPanel>
+                                </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <h:outputLabel value="Observacion" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputTextarea id="txtDevolucion" binding="#{DevolucionVista.txtobservaciones}"  />
+                                    </p:column>
+                                </p:row>
+                                 <!--BOTONES-->
+                            <p:row>
+                                <p:column>
+                                    <p:commandButton value="REGISTRAR" binding="#{DevolucionVista.btnRegistrar}" action="#{DevolucionVista.accion_registrar()}" update="formulario"/>
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton value="MODIFICAR" binding="#{productoVistav.btnModificar}" action="#{productoVistav.modificarProducto()}" update="formulario"/>
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton value="ELIMINAR" binding="#{productoVistav.btnEliminar}" action="#{productoVistav.accion_eliminar()}" update="formulario"/>
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton value="LIMPIAR" binding="#{productoVistav.btnLimpiar}" action="#{productoVistav.limpiar()}" update="formulario"/>
+                                </p:column>
+                            </p:row>
+                            </p:panelGrid>
+                        </p:panel>
+                        <!--TABLA-->
+                        <p:dataTable id="tabladevolucion" var="devolucion" value="#{DevolucionVista.listaDevolucion}" widgetVar="devolucion"
+                                     emptyMessage="No cars found with given criteria" filteredValue="#{DevolucionVista.listaDevolucion}"
+                                     selectionMode="single"
+                                     selection="#{DevolucionVista.selecteDevolucionD}"
+                                     rowKey="#{devolucion.codigoDevolucion}">
+                            <p:ajax event="rowSelect" listener="#{DevolucionVista.seleccionFilaDevolucion}" update=":formulario" />
+
+                            <f:facet name="header">
+                                <p:outputPanel>
+                                    <h:outputText value="Busqueda por codigo o nombre" />
+                                    <p:inputText id="globalFilter" onkeyup="PF('devolucion').filter()" style="width:150px" placeholder="Escriba algo"/>
+                                </p:outputPanel>
+                            </f:facet>
+
+                            <p:column filterBy="#{devolucion.codigoDevolucion}" headerText="CODIGO DEVOLUCION" footerText="" filterMatchMode="exact">
+                                <h:outputText value="#{devolucion.codigoDevolucion}" />
+                            </p:column>
+
+                            <p:column headerText="Fecha">
+                                <h:outputText value="#{devolucion.fechaDevolucion}" />
+                            </p:column>
+                            <p:column headerText="Observacion">
+                                <h:outputText value="#{devolucion.observacionDevolucion}" />
+                            </p:column>
+                            <p:column headerText="Cedula">
+                                <h:outputText value="#{devolucion.cedulaCliente.cedulaCliente}" />
+                            </p:column>
+                           
+                        </p:dataTable>
+
+
+
+                    </h:form>
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+</html>
+

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/*package ventas.Filtros;
+package ventas.Filtros;
 
 import java.io.IOException;
 import java.util.logging.Filter;
@@ -15,35 +15,37 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Usuario;
 
 /**
  *
  * @author Estudiante
  */
-/*
+
 public class FiltroVendedor implements Filter{
  private FilterConfig configuration;
     
-    @Override
+   // @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         this.configuration=filterConfig;
     }
 
-   /* @Override
+  // @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         try{
         String tipo=((HttpServletRequest) request).getSession().getAttribute("tipo").toString();
         System.out.println("Tipo "+tipo);
         if(tipo!=null)
         {
-            if(!tipo.equals("docente"))
+            if(!tipo.equals("vendedor"))
             {
-               Estudiante estudiante = (Estudiante) ((HttpServletRequest)request).getSession().getAttribute("usuario");
+              // Estudiante estudiante = (Estudiante) ((HttpServletRequest)request).getSession().getAttribute("usuario");
                 ((HttpServletResponse)response).sendRedirect("faces/SesionInvalida.xhtml");
             }else{
-              Docente docente =(Docente)((HttpServletRequest)request).getSession().getAttribute("usuario");
+                Usuario vendedor =(Usuario)((HttpServletRequest)request).getSession().getAttribute("usuario");
+             // Docente docente =(Docente)((HttpServletRequest)request).getSession().getAttribute("usuario");
             
-                if(docente!=null){
+                if(vendedor!=null){
                     chain.doFilter(request, response);
                 }else{
                     ((HttpServletResponse)response).sendRedirect("faces/SesionInvalida.xhtml");
@@ -56,11 +58,17 @@ public class FiltroVendedor implements Filter{
         }
     }
 
-    @Override
+    //@Override
     public void destroy() {
         this.configuration = null;
         
     }
+
+    @Override
+    public boolean isLoggable(LogRecord record) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     
 
-}    */
+}    

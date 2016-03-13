@@ -18,8 +18,9 @@ import persistencia.UsuarioFacadeLocal;
 public class SessionLogica implements SessionLogicaLocal {
 @EJB private UsuarioFacadeLocal UsuarioDAO;
     @Override
-    public Usuario iniciarSesionAdministrador(Integer idUsuario, String claveUsuario) throws Exception {
-       if(idUsuario == null || claveUsuario== null){
+    public Usuario iniciarSesionAdministrador(Integer idUsuario, String claveUsuario ,String tipoUsuario) throws Exception {
+        //if()
+        if(idUsuario == null || claveUsuario== null){
             throw new Exception("Los datos de ingreso son obligatorios");
         }
         if(claveUsuario.equals("")){
@@ -35,7 +36,7 @@ public class SessionLogica implements SessionLogicaLocal {
     }
 
     @Override
-    public Usuario iniciarSesionVendedor(Integer idUsuario, String claveUsuario) throws Exception {
+    public Usuario iniciarSesionVendedor(Integer idUsuario, String claveUsuario, String tipoUsuario) throws Exception {
        if(idUsuario == null || claveUsuario== null){
             throw new Exception("Los datos de ingreso son obligatorios");
         }
