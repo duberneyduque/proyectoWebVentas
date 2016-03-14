@@ -42,7 +42,7 @@ public class FiltroVendedor implements Filter{
               // Estudiante estudiante = (Estudiante) ((HttpServletRequest)request).getSession().getAttribute("usuario");
                 ((HttpServletResponse)response).sendRedirect("faces/SesionInvalida.xhtml");
             }else{
-                Usuario vendedor =(Usuario)((HttpServletRequest)request).getSession().getAttribute("usuario");
+                Usuario vendedor =(Usuario)((HttpServletRequest)request).getSession().getAttribute("Usuario");
              // Docente docente =(Docente)((HttpServletRequest)request).getSession().getAttribute("usuario");
             
                 if(vendedor!=null){

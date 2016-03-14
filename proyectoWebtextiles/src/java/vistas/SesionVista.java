@@ -77,9 +77,8 @@ public class SesionVista {
         ExternalContext extcontex =contex.getExternalContext();
         String urlA=""; String urlV="";
       try {
-          
-          urlA = extcontex.encodeActionURL(contex.getApplication().getViewHandler().getActionURL(contex,"/administrador/gestionProducto_1.xhtml"));
-          urlV = extcontex.encodeActionURL(contex.getApplication().getViewHandler().getActionURL(contex,"/vendedor/gestionCiudad.xhtml"));
+           urlV = extcontex.encodeActionURL(contex.getApplication().getViewHandler().getActionURL(contex,"/vendedor/gestionProductoVE.xhtml"));
+          urlA = extcontex.encodeActionURL(contex.getApplication().getViewHandler().getActionURL(contex,"/administrador/gestionProductoAD.xhtml"));
           Integer documento = Integer.parseInt(txtUsuario.getValue().toString());
           String clave = txtclave.getValue().toString();
          
@@ -90,26 +89,27 @@ public class SesionVista {
              if (administradorlogeado==null){
                  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"error","el usuario no existe"));
              }else{
-                 // funcionari administrador
-                  extcontex.getSessionMap().put("Usuario",administradorlogeado);
+                 //  administrador logeado
+                  
+                 //Usuario usutipo=new Usuario();
+            // usutipo  = usuariofacade.consultarTipousuario(documento, clave);
+             // String tipo=usutipo.getTipoUsuario();*/
+             // if(tipo.equals("administrador")){
+                 extcontex.getSessionMap().put("Usuario",administradorlogeado);
                   extcontex.getSessionMap().put("tipo", "administrador");
-                 Usuario usutipo=new Usuario();
-             usutipo  = usuariofacade.consultarTipousuario(documento, clave);
-              String tipo=usutipo.getTipoUsuario();
-              if(tipo.equals("administrador")){
                  extcontex.redirect(urlA);
-              }
+              
              }
           }else {
                  // vendedor logeado
-               Usuario usutipo=new Usuario();
+              /* Usuario usutipo=new Usuario();
              usutipo  = usuariofacade.consultarTipousuario(documento, clave);
               String tipo=usutipo.getTipoUsuario();
-              if(tipo.equals("vendedor")){
+              if(tipo.equals("vendedor")){*/
               extcontex.getSessionMap().put("Usuario", vendendorlogeado);
                   extcontex.getSessionMap().put("tipo", "vendedor");
                   extcontex.redirect(urlV);
-          }
+          
           }
       } catch (Exception ex) {
            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"errlojuh","erro de try cath"+ex.getMessage()));

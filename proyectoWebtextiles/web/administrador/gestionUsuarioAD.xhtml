@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>TEXTILESDUQUE/USUARIO</title>
+            </f:facet>
+        </h:head>
+
+        <h:body style="font-size: 12px;">
+
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                    GESTION DE USUARIO
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
+                    TEXTILES DUQUE
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="175" header="ocultar Menu" collapsible="true">
+                    <p:menu>
+                        
+                        <p:submenu label="ADMINISTRADOR">
+                               
+                            <p:menuitem value="Ciudad" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionCiudadAD.xhtml" />
+                            <p:menuitem value="Producto" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionProductoAD.xhtml" />
+                            <p:menuitem  value="Cliente" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionClienteAD.xhtml"/>
+                            <p:menuitem value="Categoria" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionCategoriaAD.xhtml" />
+                            <p:menuitem value="Devolucion" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionDevolucionAD.xhtml" />
+                            <p:menuitem value="Usuario" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionUsuarioAD.xhtml"/>
+                            <p:menuitem value="Factura" url="http://www.primefaces.org/themes.html" />
+                            
+                        </p:submenu>
+                        
+                         <p:submenu label="VENDEDOR">
+                            <p:menuitem value="Cliente" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionClienteVE.xhtml" />
+                            <p:menuitem value="Devolucion" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionDevolucionVE.xhtml" />
+                            <p:menuitem  value="Producto" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionProductoVE.xhtml"/>
+                            <p:menuitem value="Factura" url="http://www.primefaces.org/themes.html" />
+                            
+
+                        </p:submenu>
+
+                    </p:menu>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+
+                    <h:form id="formulario">
+
+                        <p:panelGrid columns="6">
+
+                            <h:outputLabel value="id" />
+                            <p:inputText id="txtCodigo" binding="#{usuarioVistav.txtidUsuario}"/>
+                            <h:outputLabel  value="nombre"/>
+                            <p:inputText id="txtnombre" binding="#{usuarioVistav.txtnombreUsuario}"/>
+                            <h:outputLabel value="apellido"/>
+                            <p:inputText id="txtapellido" binding="#{usuarioVistav.txtapellidoUsuario}"/>
+                            <h:outputLabel value="telefono"/>
+                            <p:inputText id="txttelefono" binding="#{usuarioVistav.txttelefonoUsuario}"/>
+                            <h:outputLabel value="correo"/>
+                            <p:inputText id="txtcorreo" binding="#{usuarioVistav.txtcorreoUsuario}"/>
+                            <h:outputLabel value="tipo" />
+                            <p:inputText id="txttipo" binding="#{usuarioVistav.txttipoUsuario}"/>
+                            <h:outputLabel value="clave"/>
+                            <p:inputText id="txtclave" binding="#{usuarioVistav.txtclaveUsuario}"/>
+                            
+                           
+
+                            <!--BOTONES-->
+                            <p:row>
+                                <p:column>
+                                    <p:commandButton value="REGISTRAR" binding="#{usuarioVistav.btnRegistrar}" action="#{usuarioVistav.accion_registrar()}" update="formulario"/>
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton value="MODIFICAR" binding="#{usuarioVistav.btnModificar}" action="#{usuarioVistav.modificarUsuario()}" update="formulario"/>
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton value="ELIMINAR" binding="#{usuarioVistav.btnEliminar}" action="#{usuarioVistav.accion_eliminar()}" update="formulario"/>
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton value="LIMPIAR" binding="#{usuarioVistav.btnLimpiar}" action="#{usuarioVistav.limpiar()}" update="formulario"/>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+
+                        <p:dataTable var="usuario" value="#{usuarioVistav.listaUsuario}" widgetVar="usuario"
+                                     emptyMessage="No esta el nombre" filteredValue="#{usuarioVistav.listaUsuario}"
+                                      selectionMode="single"
+                                      selection="#{usuarioVistav.selecteUsuario}"
+                                      rowKey="#{usuario.idUsuario}">
+                            <p:ajax event="rowSelect" listener="#{usuarioVistav.seleccionFila(evt)}" update=":formulario" />
+
+                            <f:facet name="header">
+                                <p:outputPanel>
+                                    <h:outputText value="Busqueda por codigo o nombre" />
+                                    <p:inputText id="globalFilter" onkeyup="PF('usuario').filter()" style="width:150px" placeholder="Escriba algo"/>
+                                </p:outputPanel>
+                            </f:facet>
+
+                            <p:column filterBy="#{usuario.idUsuario}" headerText="id usuario" footerText="" filterMatchMode="exact">
+                                <h:outputText value="#{usuario.idUsuario}" />
+                            </p:column>
+
+                            <p:column headerText="NOMBRE">
+                                <h:outputText value="#{usuario.nombreUsuario}" />
+                            </p:column>
+                            
+                            <p:column headerText="APELLIDO">
+                                <h:outputText value="#{usuario.apellidoUsuario}" />
+                            </p:column>
+                            
+                            <p:column headerText="TELEFONO">
+                                <h:outputText value="#{usuario.telefonoUsuario}" />
+                            </p:column>
+                            
+                            <p:column headerText="CORREO">
+                                <h:outputText value="#{usuario.correoUsuario}" />
+                            </p:column>
+                            
+                            <p:column headerText="TIPO">
+                                <h:outputText value="#{usuario.tipoUsuario}" />
+                            </p:column>
+                            
+                            <p:column headerText="CLAVE">
+                                <h:outputText value="#{usuario.claveUsuario}" />
+                            </p:column>
+
+                        </p:dataTable>
+
+                    </h:form>
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+</html>
+

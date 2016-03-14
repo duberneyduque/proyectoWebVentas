@@ -26,13 +26,26 @@
 
                 <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
                     <h:form>
-                        <p:menu>
-                        <p:submenu label="Resources">
-                            <p:menuitem value="Ciudad" url="http://localhost:8080/Proyecto/faces/gestionCiudad.xhtml" />
-                            <p:menuitem value="Producto" url="http://localhost:8080/proyectoWebtextiles/faces/vendedor/gestionProducto_1.xhtml" />
-                            <p:menuitem value="Categoria" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionCategoria.xhtml" />
-                            <p:menuitem value="Devolucion" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionDevolucion_1.xhtml" />
-                            <p:menuitem value="Devolucion" url="http://www.primefaces.org/themes.html" />
+                         <p:menu>
+                        
+                        <p:submenu label="ADMINISTRADOR">
+                               
+                            <p:menuitem value="Ciudad" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionCiudadAD.xhtml" />
+                            <p:menuitem value="Producto" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionProductoAD.xhtml" />
+                            <p:menuitem  value="Cliente" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionClienteAD.xhtml"/>
+                            <p:menuitem value="Categoria" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionCategoriaAD.xhtml" />
+                            <p:menuitem value="Devolucion" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionDevolucionAD.xhtml" />
+                            <p:menuitem value="Usuario" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionUsuarioAD.xhtml"/>
+                            <p:menuitem value="Factura" url="http://www.primefaces.org/themes.html" />
+                            
+                        </p:submenu>
+                        
+                         <p:submenu label="VENDEDOR">
+                            <p:menuitem value="Cliente" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionClienteVE.xhtml" />
+                            <p:menuitem value="Devolucion" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionDevolucionVE.xhtml" />
+                            <p:menuitem  value="Producto" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionProductoVE.xhtml"/>
+                            <p:menuitem value="Factura" url="http://www.primefaces.org/themes.html" />
+                            
 
                         </p:submenu>
 

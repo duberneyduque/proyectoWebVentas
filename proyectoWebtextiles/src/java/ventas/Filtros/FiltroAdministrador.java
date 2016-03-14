@@ -42,7 +42,7 @@ public class FiltroAdministrador implements Filter{
                
                 ((HttpServletResponse)response).sendRedirect("faces/SesionInvalida.xhtml");
             }else{
-                Usuario administrador =(Usuario)((HttpServletRequest)request).getSession().getAttribute("usuario");
+                Usuario administrador =(Usuario)((HttpServletRequest)request).getSession().getAttribute("Usuario");
             
                 if(administrador!=null){
                     chain.doFilter(request, response);
