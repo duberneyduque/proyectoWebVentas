@@ -343,10 +343,12 @@ public class ProductoVista {
         try{
         txtcodigoProducto.setValue("");
         txtnombreProducto.setValue("");
-        txtfechaProducto = null;
-        txtfechaProducto.setValue("");
-        cmbGenero.setValue("seleccione");
-        cmbEstadoProducto.setValue("seleccione");
+        txtfechaProducto.setValue(null);
+        txtfechaProducto.setLabel("");
+        cmbGenero.setValue(null);
+        cmbGenero.setLabel("seleccionar");
+        cmbEstadoProducto.setValue(null);
+        cmbEstadoProducto.setLabel("");
         txtColorProducto.setValue("");
         txtPrecioProducto.setValue("");
         txtcategoria.setValue("");

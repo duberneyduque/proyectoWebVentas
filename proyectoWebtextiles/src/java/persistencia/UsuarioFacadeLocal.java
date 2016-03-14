@@ -30,4 +30,7 @@ public interface UsuarioFacadeLocal {
 
     int count();
     
+    Usuario  consultarTipousuario(int documento,String clave);
+    
+    
 }

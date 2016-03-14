@@ -19,6 +19,8 @@ import modelo.Usuario;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.component.password.Password;
+import persistencia.UsuarioFacade;
+import persistencia.UsuarioFacadeLocal;
 
 /**
  *
@@ -29,6 +31,8 @@ import org.primefaces.component.password.Password;
 public class SesionVista {
     @EJB
     private SessionLogicaLocal sesionLogica;
+    @EJB
+    private UsuarioFacadeLocal usuariofacade;
     private InputText txtUsuario;
     private Password txtclave;
     private CommandButton btnIngresar;
@@ -73,31 +77,42 @@ public class SesionVista {
         ExternalContext extcontex =contex.getExternalContext();
         String urlA=""; String urlV="";
       try {
-          urlA = extcontex.encodeActionURL(contex.getApplication().getViewHandler().getActionURL(contex,"/gestionProducto.xhtml"));
-          urlV = extcontex.encodeActionURL(contex.getApplication().getViewHandler().getActionURL(contex,"/gestionProducto.xhtml"));
+          
+          urlA = extcontex.encodeActionURL(contex.getApplication().getViewHandler().getActionURL(contex,"/administrador/gestionProducto_1.xhtml"));
+          urlV = extcontex.encodeActionURL(contex.getApplication().getViewHandler().getActionURL(contex,"/vendedor/gestionCiudad.xhtml"));
           Integer documento = Integer.parseInt(txtUsuario.getValue().toString());
           String clave = txtclave.getValue().toString();
-          String tipoUsuario="";
-          Usuario vendendorlogeado = sesionLogica.iniciarSesionVendedor(documento,clave,tipoUsuario);
+         
+          Usuario vendendorlogeado = sesionLogica.iniciarSesionUsuario(documento,clave);
           Usuario administradorlogeado = null;
           if (vendendorlogeado==null){
-             administradorlogeado = sesionLogica.iniciarSesionAdministrador(documento,clave,tipoUsuario);
+             administradorlogeado = sesionLogica.iniciarSesionUsuario(documento,clave);
              if (administradorlogeado==null){
                  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"error","el usuario no existe"));
              }else{
                  // funcionari administrador
-                 extcontex.getSessionMap().put("Usuario",administradorlogeado);
+                  extcontex.getSessionMap().put("Usuario",administradorlogeado);
                   extcontex.getSessionMap().put("tipo", "administrador");
-                  extcontex.redirect(urlA);
+                 Usuario usutipo=new Usuario();
+             usutipo  = usuariofacade.consultarTipousuario(documento, clave);
+              String tipo=usutipo.getTipoUsuario();
+              if(tipo.equals("administrador")){
+                 extcontex.redirect(urlA);
+              }
              }
           }else {
                  // vendedor logeado
+               Usuario usutipo=new Usuario();
+             usutipo  = usuariofacade.consultarTipousuario(documento, clave);
+              String tipo=usutipo.getTipoUsuario();
+              if(tipo.equals("vendedor")){
               extcontex.getSessionMap().put("Usuario", vendendorlogeado);
                   extcontex.getSessionMap().put("tipo", "vendedor");
                   extcontex.redirect(urlV);
           }
+          }
       } catch (Exception ex) {
-           FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"error",ex.getMessage()));
+           FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"errlojuh","erro de try cath"+ex.getMessage()));
       }
     }
      public void cerrarSesion_action()

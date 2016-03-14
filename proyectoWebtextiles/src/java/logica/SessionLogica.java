@@ -17,9 +17,9 @@ import persistencia.UsuarioFacadeLocal;
 @Stateless
 public class SessionLogica implements SessionLogicaLocal {
 @EJB private UsuarioFacadeLocal UsuarioDAO;
-    @Override
-    public Usuario iniciarSesionAdministrador(Integer idUsuario, String claveUsuario ,String tipoUsuario) throws Exception {
-        //if()
+  /*  @Override
+    public Usuario iniciarSesionAdministrador(Integer idUsuario, String claveUsuario) throws Exception {
+     // if()
         if(idUsuario == null || claveUsuario== null){
             throw new Exception("Los datos de ingreso son obligatorios");
         }
@@ -31,12 +31,14 @@ public class SessionLogica implements SessionLogicaLocal {
             if(!usuario.getClaveUsuario().equals(claveUsuario)){
                 throw new Exception("La contraseña es incorrecta");
             }
-        }
+        }else{
+                throw new Exception("el usuario no existe");
+            }
         return usuario;  
     }
 
     @Override
-    public Usuario iniciarSesionVendedor(Integer idUsuario, String claveUsuario, String tipoUsuario) throws Exception {
+    public Usuario iniciarSesionVendedor(Integer idUsuario, String claveUsuario) throws Exception {
        if(idUsuario == null || claveUsuario== null){
             throw new Exception("Los datos de ingreso son obligatorios");
         }
@@ -48,10 +50,33 @@ public class SessionLogica implements SessionLogicaLocal {
             if(!usuario.getClaveUsuario().equals(claveUsuario)){
                 throw new Exception("La contraseña es incorrecta");
             }
-        }
+        }else{
+                throw new Exception("el usuario no existe");
+            }
         return usuario; 
-    }
+    }*/
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    @Override
+    public Usuario iniciarSesionUsuario(Integer idUsuario, String claveUsuario) throws Exception {
+        if(idUsuario == null || claveUsuario== null){
+            throw new Exception("Los datos de ingreso son obligatorios");
+        }
+        if(claveUsuario.equals("")){
+            throw new Exception("La clave es obligatoria");
+        }
+        Usuario usuario = UsuarioDAO.find(idUsuario);
+        if(usuario!=null){
+            if(!usuario.getClaveUsuario().equals(claveUsuario)){
+                throw new Exception("La contraseña es incorrecta");
+            
+            }
+        }else{
+                throw new Exception("el usuario no existe");
+            }
+        return usuario; 
+    }
+    
 }

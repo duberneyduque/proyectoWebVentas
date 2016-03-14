@@ -16,7 +16,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
 import logica.ClienteLogicaLocal;
 import logica.DevolucionLogicaLocal;
 import modelo.Cliente;
@@ -25,7 +24,6 @@ import org.primefaces.component.calendar.Calendar;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.component.inputtextarea.InputTextarea;
-import org.primefaces.component.selectonemenu.SelectOneMenu;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -218,20 +216,51 @@ private ClienteLogicaLocal clienteLogica;
         btnEliminar.setDisabled(true);
     }
      public void seleccionFilaDevolucion(SelectEvent evt){
-        Devolucion d = selecteDevolucionD;
-        txtCodigoDevolucion.setValue(d.getCodigoDevolucion());
-        txtFecha.setValue(d.getFechaDevolucion());
-        txtobservaciones.setValue(d.getObservacionDevolucion());
-        txtCedulaCliente.setValue(d.getCedulaCliente().getCedulaCliente());
-        btnRegistrar.setDisabled(true);
-        btnModificar.setDisabled(false);
-        btnEliminar.setDisabled(false);
-        txtCodigoDevolucion.setDisabled(true);
-        listaDevolucion=null;
+       Devolucion d=selecteDevolucionD;
+       txtCodigoDevolucion.setValue(d.getCodigoDevolucion().toString());
+       txtFecha.setValue((Date)d.getFechaDevolucion());
+       txtobservaciones.setValue(d.getObservacionDevolucion());
+       txtCedulaCliente.setValue(d.getCedulaCliente().getCedulaCliente().toString());
+       btnRegistrar.setDisabled(true);
+       btnModificar.setDisabled(false);
+       btnEliminar.setDisabled(false);
+       btnLimpiar.setDisabled(false);
+       listaDevolucion=null;
+       
     }
  public void seleccionFilaCliente(SelectEvent evt) {
         Cliente objeCliente = selecteClienteD;
         txtCedulaCliente.setValue(objeCliente.getCedulaCliente());
         listaClientes= null;
+    }
+  public void modificar(){
+    try {
+        Devolucion nuevaDevolucion = new Devolucion();
+        Cliente nuevocliente = new Cliente();
+        nuevaDevolucion.setCodigoDevolucion(Integer.parseInt(txtCodigoDevolucion.getValue().toString()));
+        nuevaDevolucion.setFechaDevolucion((Date)txtFecha.getValue());
+        nuevaDevolucion.setObservacionDevolucion(txtobservaciones.getValue().toString());
+        nuevocliente.setCedulaCliente(Long.parseLong(txtCedulaCliente.getValue().toString()));
+        nuevaDevolucion.setCedulaCliente(nuevocliente);
+        devolucionLogica.edit(nuevaDevolucion);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "La devolucion se  modifico correctamente"));
+        listaDevolucion = null;
+    } catch (Exception ex) {
+        Logger.getLogger(DevolucionVista.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }
+     
+    public void eliminar(){
+        try {
+            Devolucion devolucionEliminada = new Devolucion();
+            devolucionEliminada.setCodigoDevolucion(Integer.parseInt(txtCodigoDevolucion.getValue().toString()));            
+            devolucionLogica.remove(devolucionEliminada);
+              FacesContext.getCurrentInstance().addMessage("Mensaje", new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "la devolucion  se eliminó con Éxito"));
+            listaDevolucion =null;
+           
+        } catch (Exception ex) {
+            Logger.getLogger(ClienteVista.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
     }
 }

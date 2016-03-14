@@ -27,15 +27,16 @@
                 <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
                     <h:form>
                         <p:menu>
-                            <p:submenu label="Resources">
-                                <p:menuitem value="Ciudad" url="http://localhost:8080/Proyecto/faces/gestionCiudad.xhtml" />
-                                <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
-                                <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
-                                <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
+                        <p:submenu label="Resources">
+                            <p:menuitem value="Ciudad" url="http://localhost:8080/Proyecto/faces/gestionCiudad.xhtml" />
+                            <p:menuitem value="Producto" url="http://localhost:8080/proyectoWebtextiles/faces/vendedor/gestionProducto_1.xhtml" />
+                            <p:menuitem value="Categoria" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionCategoria.xhtml" />
+                            <p:menuitem value="Devolucion" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionDevolucion_1.xhtml" />
+                            <p:menuitem value="Devolucion" url="http://www.primefaces.org/themes.html" />
 
-                            </p:submenu>
+                        </p:submenu>
 
-                        </p:menu>
+                    </p:menu>
                     </h:form>
                 </p:layoutUnit>
 
@@ -58,7 +59,7 @@
                                         <h:outputLabel  value="Fecha"/>
                                     </p:column>
                                     <p:column >
-                                        <p:calendar id="txtfecha" binding="#{DevolucionVista.txtFecha}" size="6" />
+                                        <p:calendar id="txtfecha" binding="#{DevolucionVista.txtFecha}" size="11" />
                                     </p:column>
                                     <!--TABLA DE CLIENTE-->
                                      <p:column>
@@ -109,13 +110,13 @@
                                     <p:commandButton value="REGISTRAR" binding="#{DevolucionVista.btnRegistrar}" action="#{DevolucionVista.accion_registrar()}" update="formulario"/>
                                 </p:column>
                                 <p:column>
-                                    <p:commandButton value="MODIFICAR" binding="#{productoVistav.btnModificar}" action="#{productoVistav.modificarProducto()}" update="formulario"/>
+                                    <p:commandButton value="MODIFICAR" binding="#{DevolucionVista.btnModificar}" action="#{DevolucionVista.modificar()}" update="formulario"/>
                                 </p:column>
                                 <p:column>
-                                    <p:commandButton value="ELIMINAR" binding="#{productoVistav.btnEliminar}" action="#{productoVistav.accion_eliminar()}" update="formulario"/>
+                                    <p:commandButton value="ELIMINAR" binding="#{DevolucionVista.btnEliminar}" action="#{DevolucionVista.eliminar()}" update="formulario"/>
                                 </p:column>
                                 <p:column>
-                                    <p:commandButton value="LIMPIAR" binding="#{productoVistav.btnLimpiar}" action="#{productoVistav.limpiar()}" update="formulario"/>
+                                    <p:commandButton value="LIMPIAR" binding="#{DevolucionVista.btnLimpiar}" action="#{DevolucionVista.limpiar()}" update="formulario"/>
                                 </p:column>
                             </p:row>
                             </p:panelGrid>
@@ -150,9 +151,6 @@
                             </p:column>
                            
                         </p:dataTable>
-
-
-
                     </h:form>
                 </p:layoutUnit>
 

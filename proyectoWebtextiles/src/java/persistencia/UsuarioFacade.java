@@ -7,7 +7,9 @@ package persistencia;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import modelo.Usuario;
 
 /**
@@ -27,5 +29,17 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     public UsuarioFacade() {
         super(Usuario.class);
     }
+
+    @Override
+    public Usuario consultarTipousuario(int documento, String clave) {
+       String consulta = "select u.tipoUsuario from Usuario u where u.idUsuario="+documento+"and u.claveUsuario="+clave+"";
+       try{
+       Query query= em.createQuery(consulta);
+        return (Usuario) query.getSingleResult();
+       }catch(NoResultException nre){
+       return null;
+       }
+    }
+    
     
 }

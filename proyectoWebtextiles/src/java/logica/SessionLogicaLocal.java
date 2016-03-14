@@ -15,7 +15,8 @@ import modelo.Usuario;
 @Local
 public interface SessionLogicaLocal {
     
-    public Usuario iniciarSesionAdministrador(Integer idUsuario, String claveUsuario , String tipoUsuario ) throws Exception;
-    public Usuario iniciarSesionVendedor(Integer idUsuario, String claveUsuario , String tipoUsuario) throws Exception;
+   // public Usuario iniciarSesionAdministrador(Integer idUsuario, String claveUsuario ) throws Exception;
+   // public Usuario iniciarSesionVendedor(Integer idUsuario, String claveUsuario) throws Exception;
+    public  Usuario  iniciarSesionUsuario(Integer idUsuario, String claveUsuario) throws Exception;
     
 }
