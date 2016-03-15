@@ -20,4 +20,5 @@ public interface UsuarioLogicaLocal {
    void eliminar(Usuario usuario)throws Exception;
    Usuario consultarPorCodigo(Integer idUsuario)throws Exception;
     List<Usuario>consultarTodo()throws Exception;
+     String  consultarTipousuario(int documento,String clave);
 }

@@ -43,7 +43,7 @@ private UsuarioFacadeLocal UsuarioDAO;
     @Override
     public void modificar(Usuario usuario) throws Exception {
       Usuario objUsuario = UsuarioDAO.find(usuario.getIdUsuario()); 
-        if(usuario!=null){
+        if(objUsuario!=null){
         if(usuario.getIdUsuario()==null){
             throw new Exception("ID del usuario es obligatorio"); 
         }else if(usuario.getNombreUsuario()==null || usuario.getNombreUsuario().equals("")){
@@ -52,10 +52,10 @@ private UsuarioFacadeLocal UsuarioDAO;
     }else{
         throw new Exception("El usuario no tiene informacion");
     }
-    if(objUsuario==null){
+    if(objUsuario!=null){
         UsuarioDAO.edit(usuario);
     }else{
-        throw new Exception("El usuario ya esta registrada");
+        throw new Exception("El usuario ya esta registrado");
     } 
     }
 
@@ -93,4 +93,14 @@ private UsuarioFacadeLocal UsuarioDAO;
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    @Override
+    public String consultarTipousuario(int documento, String clave) {
+        Usuario usuario=UsuarioDAO.find(documento);
+        if(usuario.getIdUsuario()==documento && usuario.getClaveUsuario().equals(clave)){
+          String  tipoUsuario=usuario.getTipoUsuario();
+          return tipoUsuario;
+        }
+      return null;
+    }
 }

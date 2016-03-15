@@ -31,15 +31,17 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     }
 
     @Override
-    public Usuario consultarTipousuario(int documento, String clave) {
-       String consulta = "select u.tipoUsuario from Usuario u where u.idUsuario="+documento+"and u.claveUsuario="+clave+"";
+    public String consultarTipousuario(int documento, String clave) {
+         String consulta = "select u.tipoUsuario from Usuario u where u.idUsuario="+documento+"and u.claveUsuario="+clave+"";
        try{
        Query query= em.createQuery(consulta);
-        return (Usuario) query.getSingleResult();
+        return (String) query.getSingleResult();
        }catch(NoResultException nre){
        return null;
        }
     }
+
+   
     
     
 }
