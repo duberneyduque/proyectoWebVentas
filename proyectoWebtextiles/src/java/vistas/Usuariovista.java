@@ -195,12 +195,12 @@ public void accion_registrar(){
         try {
             Usuario ObjetoUsuario=new Usuario();
             ObjetoUsuario.setIdUsuario(Integer.parseInt(txtidUsuario.getValue().toString()));
-            ObjetoUsuario.setNombreUsuario((txtnombreUsuario.getValue().toString().toUpperCase()));
-            ObjetoUsuario.setApellidoUsuario((txtapellidoUsuario.getValue().toString().toUpperCase()));
+            ObjetoUsuario.setNombreUsuario((txtnombreUsuario.getValue().toString()));
+            ObjetoUsuario.setApellidoUsuario((txtapellidoUsuario.getValue().toString()));
             ObjetoUsuario.setTelefonoUsuario((txttelefonoUsuario.getValue().toString()));
-            ObjetoUsuario.setCorreoUsuario((txtcorreoUsuario.getValue().toString().toUpperCase()));
-            ObjetoUsuario.setTipoUsuario((cmbtipoUsuario.getValue().toString().toUpperCase()));
-            ObjetoUsuario.setClaveUsuario((txtclaveUsuario.getValue().toString().toUpperCase()));
+            ObjetoUsuario.setCorreoUsuario((txtcorreoUsuario.getValue().toString()));
+            ObjetoUsuario.setTipoUsuario((cmbtipoUsuario.getValue().toString()));
+            ObjetoUsuario.setClaveUsuario((txtclaveUsuario.getValue().toString()));
             usuarioLogica.crear(ObjetoUsuario);
             listaUsuario=null;// sino la pongo null no la refresca por que ya la tomaria como llena            
             //limpiar();
@@ -216,12 +216,12 @@ public void modificarUsuario(){
      try {
          Usuario Usuariomodificar=new Usuario();
             Usuariomodificar.setIdUsuario(Integer.parseInt(txtidUsuario.getValue().toString()));
-            Usuariomodificar.setNombreUsuario((txtnombreUsuario.getValue().toString().toUpperCase()));
-            Usuariomodificar.setApellidoUsuario((txtapellidoUsuario.getValue().toString().toUpperCase()));
+            Usuariomodificar.setNombreUsuario((txtnombreUsuario.getValue().toString()));
+            Usuariomodificar.setApellidoUsuario((txtapellidoUsuario.getValue().toString()));
             Usuariomodificar.setTelefonoUsuario((txttelefonoUsuario.getValue().toString()));
-            Usuariomodificar.setCorreoUsuario((txtcorreoUsuario.getValue().toString().toUpperCase()));
-            Usuariomodificar.setTipoUsuario((cmbtipoUsuario.getValue().toString().toUpperCase()));
-            Usuariomodificar.setClaveUsuario((txtclaveUsuario.getValue().toString().toUpperCase()));
+            Usuariomodificar.setCorreoUsuario((txtcorreoUsuario.getValue().toString()));
+            Usuariomodificar.setTipoUsuario((cmbtipoUsuario.getValue().toString()));
+            Usuariomodificar.setClaveUsuario((txtclaveUsuario.getValue().toString()));
         usuarioLogica.modificar(Usuariomodificar);
         listaUsuario = null;
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "el usuario  se  modifico correctamente")); 
@@ -236,7 +236,8 @@ public void limpiar(){
     txtapellidoUsuario.setValue("");
     txttelefonoUsuario.setValue("");
     txtcorreoUsuario.setValue("");
-    cmbtipoUsuario.setValue("seleccione");
+    cmbtipoUsuario.setValue(null);
+    cmbtipoUsuario.setLabel("seleccione");
     txtclaveUsuario.setValue("");
     btnRegistrar.setDisabled(false);
     btnModificar.setDisabled(true);
