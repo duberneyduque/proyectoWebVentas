@@ -51,6 +51,7 @@ private CommandButton btnModificar;
 private CommandButton btnLimpiar;
 private CommandButton btnEliminar;
 
+
 @EJB 
 private DevolucionLogicaLocal devolucionLogica;
 @EJB
@@ -188,29 +189,41 @@ private ClienteLogicaLocal clienteLogica;
  //LOS METODOS PARA SER LLAMOS EN LAS PAGINAS WEB
     
     public void accion_registrar() {
+        
         try {
             Devolucion nuevaDevolucion = new Devolucion();
             Cliente nuevocliente = new Cliente();
+            if(txtCodigoDevolucion.getValue().equals("") || txtFecha.getValue().equals("") || txtobservaciones.getValue().equals("") || txtCedulaCliente.getValue().equals("")){
+                 txtCodigoDevolucion.setPlaceholder("Debe llenar el campo");
+                 txtFecha.setPlaceholder("Debe llenar el campo");
+                  txtobservaciones.setPlaceholder("Debe llenar el campo");
+                 txtCedulaCliente.setPlaceholder("Debe llenar el campo");
+           }else{
             nuevaDevolucion.setCodigoDevolucion(Integer.parseInt(txtCodigoDevolucion.getValue().toString().toUpperCase()));
             nuevaDevolucion.setFechaDevolucion((Date)txtFecha.getValue());
             nuevaDevolucion.setObservacionDevolucion(txtobservaciones.getValue().toString().toUpperCase());
             nuevocliente.setCedulaCliente(Long.parseLong(txtCedulaCliente.getValue().toString()));
             nuevaDevolucion.setCedulaCliente(nuevocliente);
+           }
            devolucionLogica.create(nuevaDevolucion);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "La Devolucion  se a registro correctamente"));
             listaDevolucion = null;
-        } catch (NumberFormatException ex) {
+            listaClientes=null;
+         } catch (NumberFormatException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "El codigo   debe ser un numero y no letras"));
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", ex.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "El codigo ya esta registrado"+"\n o debe llenar todos los campos"+ex.getMessage()));
         }
+        
     }
 
     public void limpiar() {
         txtCodigoDevolucion.setValue("");
-        txtFecha.setValue("");
+        txtFecha.setValue(null);
+        txtFecha.setLabel("");
         txtobservaciones.setValue("");
-        txtCedulaCliente.setValue("");
+        txtCedulaCliente.setValue(null);
+        txtCedulaCliente.setLabel("");
         btnRegistrar.setDisabled(false);
         btnModificar.setDisabled(true);
         btnEliminar.setDisabled(true);
@@ -226,11 +239,12 @@ private ClienteLogicaLocal clienteLogica;
        btnEliminar.setDisabled(false);
        btnLimpiar.setDisabled(false);
        listaDevolucion=null;
+       listaClientes=null;
        
     }
  public void seleccionFilaCliente(SelectEvent evt) {
         Cliente objeCliente = selecteClienteD;
-        txtCedulaCliente.setValue(objeCliente.getCedulaCliente());
+        txtCedulaCliente.setValue(objeCliente.getCedulaCliente().toString());
         listaClientes= null;
     }
   public void modificar(){

@@ -8,6 +8,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.swing.text.html.HTMLEditorKit;
 import logica.CiudadLogicaLocal;
 import modelo.Ciudad;
 import org.primefaces.component.commandbutton.CommandButton;
@@ -21,7 +22,7 @@ import org.primefaces.event.SelectEvent;
 @ManagedBean(name = "ciudadVistav")
 @RequestScoped
 public class CiudadVista {
-
+   
     private InputText txtcodigociudad;
     private InputText txtnombreciudad;
     private CommandButton btnRegistrar;
@@ -90,7 +91,7 @@ public class CiudadVista {
                     try {
                         listaCiudad=ciudadLogica.consultarTodo();
                           } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje", "la ListaCiudad no esta vacia"));
+           FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje", "la ListaCiudad esta vacia"));
                     }
         }
         return listaCiudad;
@@ -119,12 +120,21 @@ public void accion_registrar(){
     
         try {
             Ciudad objetociudad=new Ciudad();
+            
+            if(txtcodigociudad.getValue().equals("")&& txtnombreciudad.getValue().equals("")){
+                 txtcodigociudad.setPlaceholder("Debe llenar el campo");
+                 txtnombreciudad.setPlaceholder("Debe llenar el campo");
+            }else{
             objetociudad.setCodigoCiudad(Integer.parseInt(txtcodigociudad.getValue().toString()));
-            objetociudad.setNombreCiudad(txtnombreciudad.getValue().toString());
+            objetociudad.setNombreCiudad(txtnombreciudad.getValue().toString().toUpperCase());
+            txtcodigociudad.setPlaceholder(null);
+            txtnombreciudad.setPlaceholder(null);
+            }
             ciudadLogica.crear(objetociudad);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "la ciudad se registro con exito"));
             listaCiudad=null;
         } catch (Exception ex) {
-            Logger.getLogger(CiudadVista.class.getName()).log(Level.SEVERE, null, ex);
+           FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje", "la ciudad no se pudo registrar debe llenar los campos"));
         }
         
     }
@@ -132,12 +142,12 @@ public void accion_modificar(){
         try {
             Ciudad nuevociudad=new Ciudad();
             nuevociudad.setCodigoCiudad(Integer.parseInt(txtcodigociudad.getValue().toString()));
-            nuevociudad.setNombreCiudad(txtnombreciudad.getValue().toString());
+            nuevociudad.setNombreCiudad(txtnombreciudad.getValue().toString().toUpperCase());
             ciudadLogica.modificar(nuevociudad);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "la ciudad se  modifico correctamente"));
             listaCiudad = null;
         } catch (Exception ex) {
-            Logger.getLogger(CiudadVista.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje", "la ciudad no se  modifico"));
         }
 
 }

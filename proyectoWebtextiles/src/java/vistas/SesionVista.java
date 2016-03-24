@@ -98,7 +98,7 @@ public class SesionVista {
                         extcontex.getSessionMap().put("Usuario",usuario);
                         extcontex.getSessionMap().put("tipo", "administrador");
                         extcontex.redirect(urlA);
-                    }else if(usuario.getTipoUsuario().equals("vendedor")){
+                    }else if(usuario.getTipoUsuario().equals("vendedor")){ 
                          extcontex.getSessionMap().put("Usuario",usuario);
                         extcontex.getSessionMap().put("tipo", "vendedor");
                         extcontex.redirect(urlV);

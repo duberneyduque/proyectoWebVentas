@@ -80,14 +80,15 @@
                                     </p:column>
                                 <p:column>
 
-                                    <p:inputText id="txtcategoria" binding="#{DevolucionVista.txtCedulaCliente}"/>                            
-                                    <p:commandButton id="movieBtn" value="..." type="button" />
+                                    <p:inputText id="txtCedulaCliente" binding="#{DevolucionVista.txtCedulaCliente}" disabled="true"/>                            
+                                    <p:commandButton id="movieBtn" value="..." type="button"/>
                                     <p:overlayPanel id="moviePanel" widgetVar="moviePanel" for="movieBtn" hideEffect="fade" dynamic="true" style="width:600px">
                                         <p:dataTable var="cliente" value="#{DevolucionVista.listaClientes}" rows="5" paginator="true"
                                                      selectionMode="single"
                                                      selection="#{DevolucionVista.selecteClienteD}"
-                                                     rowKey="#{cliente.cedulaCliente}">
-                                            <p:ajax event="rowSelect" listener="#{DevolucionVista.seleccionFilaCliente}" oncomplete="PF('moviePanel').hide();" update=":formulario:txtcategoria" />
+                                                     rowKey="#{cliente.cedulaCliente}"
+                                                     emptyMessage="No hay datos">
+                                            <p:ajax event="rowSelect" listener="#{DevolucionVista.seleccionFilaCliente}" oncomplete="PF('moviePanel').hide();" update=":formulario:txtCedulaCliente"  />
 
                                             <p:column headerText="Cedula cliente">
                                                 <h:outputText value="#{cliente.cedulaCliente}" />
@@ -120,23 +121,23 @@
                                  <!--BOTONES-->
                             <p:row>
                                 <p:column>
-                                    <p:commandButton value="REGISTRAR" binding="#{DevolucionVista.btnRegistrar}" action="#{DevolucionVista.accion_registrar()}" update="formulario"/>
+                                    <p:commandButton value="REGISTRAR" binding="#{DevolucionVista.btnRegistrar}" action="#{DevolucionVista.accion_registrar()}" update=":formulario"/>
                                 </p:column>
                                 <p:column>
-                                    <p:commandButton value="MODIFICAR" binding="#{DevolucionVista.btnModificar}" action="#{DevolucionVista.modificar()}" update="formulario"/>
+                                    <p:commandButton value="MODIFICAR" binding="#{DevolucionVista.btnModificar}" action="#{DevolucionVista.modificar()}" update=":formulario"/>
                                 </p:column>
                                 <p:column>
-                                    <p:commandButton value="ELIMINAR" binding="#{DevolucionVista.btnEliminar}" action="#{DevolucionVista.eliminar()}" update="formulario"/>
+                                    <p:commandButton value="ELIMINAR" binding="#{DevolucionVista.btnEliminar}" action="#{DevolucionVista.eliminar()}" update=":formulario"/>
                                 </p:column>
                                 <p:column>
-                                    <p:commandButton value="LIMPIAR" binding="#{DevolucionVista.btnLimpiar}" action="#{DevolucionVista.limpiar()}" update="formulario"/>
+                                    <p:commandButton value="LIMPIAR" binding="#{DevolucionVista.btnLimpiar}" action="#{DevolucionVista.limpiar()}" update=":formulario"/>
                                 </p:column>
                             </p:row>
                             </p:panelGrid>
                         </p:panel>
                         <!--TABLA-->
                         <p:dataTable id="tabladevolucion" var="devolucion" value="#{DevolucionVista.listaDevolucion}" widgetVar="devolucion"
-                                     emptyMessage="No cars found with given criteria" filteredValue="#{DevolucionVista.listaDevolucion}"
+                                     emptyMessage="No hay datos" filteredValue="#{DevolucionVista.listaDevolucion}"
                                      selectionMode="single"
                                      selection="#{DevolucionVista.selecteDevolucionD}"
                                      rowKey="#{devolucion.codigoDevolucion}">

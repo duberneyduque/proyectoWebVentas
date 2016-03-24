@@ -26,76 +26,78 @@
                 </p:layoutUnit>
 
                 <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
-                   <p:menu>
-                        
-                        <p:submenu label="ADMINISTRADOR">
-                               
-                            <p:menuitem value="Ciudad" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionCiudadAD.xhtml" />
-                            <p:menuitem value="Producto" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionProductoAD.xhtml" />
-                            <p:menuitem  value="Cliente" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionClienteAD.xhtml"/>
-                            <p:menuitem value="Categoria" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionCategoriaAD.xhtml" />
-                            <p:menuitem value="Devolucion" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionDevolucionAD.xhtml" />
-                            <p:menuitem value="Usuario" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionUsuarioAD.xhtml"/>
-                            <p:menuitem value="Factura" url="http://www.primefaces.org/themes.html" />
-                            
-                        </p:submenu>
-                        
-                         <p:submenu label="VENDEDOR">
-                            <p:menuitem value="Cliente" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionClienteVE.xhtml" />
-                            <p:menuitem value="Devolucion" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionDevolucionVE.xhtml" />
-                            <p:menuitem  value="Producto" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionProductoVE.xhtml"/>
-                            <p:menuitem value="Factura" url="http://www.primefaces.org/themes.html" />
-                            
+                    <h:form>
+                        <p:menu>
 
-                        </p:submenu>
+                            <p:submenu label="ADMINISTRADOR">
 
-                    </p:menu>
+                                <p:menuitem value="Ciudad" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionCiudadAD.xhtml" />
+                                <p:menuitem value="Producto" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionProductoAD.xhtml" />
+                                <p:menuitem  value="Cliente" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionClienteAD.xhtml"/>
+                                <p:menuitem value="Categoria" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionCategoriaAD.xhtml" />
+                                <p:menuitem value="Devolucion" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionDevolucionAD.xhtml" />
+                                <p:menuitem value="Usuario" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionUsuarioAD.xhtml"/>
+                                <p:menuitem value="Factura" url="http://www.primefaces.org/themes.html" />
+
+                            </p:submenu>
+
+                            <p:submenu label="VENDEDOR">
+                                <p:menuitem value="Cliente" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionClienteVE.xhtml" />
+                                <p:menuitem value="Devolucion" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionDevolucionVE.xhtml" />
+                                <p:menuitem  value="Producto" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionProductoVE.xhtml"/>
+                                <p:menuitem value="Factura" url="http://www.primefaces.org/themes.html" />
+
+
+                            </p:submenu>
+
+                        </p:menu>
+                    </h:form>
                 </p:layoutUnit>
 
                 <p:layoutUnit position="center">
-                        <h:form id="formulario">
+                    <h:form id="formulario">
+                        <p:growl id="growl" showDetail="true" sticky="true" />  
+                        <p:panel header="Ciudad">
+                            <p:panelGrid columns="4">
 
-                        <p:panelGrid columns="4">
+                                <h:outputLabel value="Codigo" />
+                                <p:inputText id="txtCodigo" binding="#{ciudadVistav.txtcodigociudad}"/>
+                                <h:outputLabel   value="Nombre"/>
+                                <p:inputText id="txtnombre" binding="#{ciudadVistav.txtnombreciudad}"/>
 
-                            <h:outputLabel value="Codigo Ciudad" />
-                            <p:inputText id="txtCodigo" binding="#{ciudadVistav.txtcodigociudad}"/>
-                            <h:outputLabel  value="Nombre Ciudad"/>
-                            <p:inputText id="txtnombre" binding="#{ciudadVistav.txtnombreciudad}"/>
-                           
 
-                            <p:commandButton value="REGISTRAR" binding="#{ciudadVistav.btnRegistrar}" action="#{ciudadVistav.accion_registrar()}" update="formulario"/>
+                                <p:commandButton value="REGISTRAR" binding="#{ciudadVistav.btnRegistrar}" action="#{ciudadVistav.accion_registrar()}" update="formulario"/>
+                                <p:commandButton value="MODIFICAR" binding="#{ciudadVistav.btnModificar}" action="#{ciudadVistav.accion_modificar()}" update="formulario"/>
+                                <p:commandButton value="ELIMINAR" binding="#{ciudadVistav.btnEliminar}" action="#{ciudadVistav.accion_eliminar()}" update="formulario"/>
+                                <p:commandButton value="LIMPIAR" binding="#{ciudadVistav.btnLimpiar}" action="#{ciudadVistav.limpiar()}" update="formulario"/>
+                            </p:panelGrid>
 
-                            <p:commandButton value="MODIFICAR" binding="#{ciudadVistav.btnModificar}" action="#{ciudadVistav.accion_modificar()}" update="formulario"/>
-                            <p:commandButton value="ELIMINAR" binding="#{ciudadVistav.btnEliminar}" action="#{ciudadVistav.accion_eliminar()}" update="formulario"/>
-                            <p:commandButton value="LIMPIAR" binding="#{ciudadVistav.btnLimpiar}" action="#{ciudadVistav.limpiar()}" update="formulario"/>
-                        </p:panelGrid>
+                            <!--TABLA-->
 
                             <p:dataTable var="ciudad" value="#{ciudadVistav.listaCiudad}" widgetVar="ciudad"
                                          emptyMessage="No cars found with given criteria" filteredValue="#{ciudadVistav.listaCiudad}"
-                                      selectionMode="single"
-                                      selection="#{ciudadVistav.selecteCiudad}"
-                                      rowKey="#{ciudad.codigoCiudad}">
+                                         selectionMode="single"
+                                         selection="#{ciudadVistav.selecteCiudad}"
+                                         rowKey="#{ciudad.codigoCiudad}">
                                 <p:ajax event="rowSelect" listener="#{ciudadVistav.seleccionFila(evt)}" update=":formulario" />
 
-                            <f:facet name="header">
-                                <p:outputPanel>
-                                    <h:outputText value="Busqueda por codigo o nombre" />
-                                    <p:inputText id="globalFilter" onkeyup="PF('categoria').filter()" style="width:150px" placeholder="Escriba algo"/>
-                                </p:outputPanel>
-                            </f:facet>
+                                <f:facet name="header">
+                                    <p:outputPanel>
+                                        <h:outputText value="Busqueda por codigo o nombre" />
+                                        <p:inputText id="globalFilter" onkeyup="PF('categoria').filter()" style="width:150px" placeholder="Escriba algo"/>
+                                    </p:outputPanel>
+                                </f:facet>
 
                                 <p:column filterBy="#{ciudad.codigoCiudad}" headerText="CODIGO CIUDAD" footerText="" filterMatchMode="exact">
                                     <h:outputText value="#{ciudad.codigoCiudad}" />
-                            </p:column>
+                                </p:column>
 
-                            <p:column headerText="NOMBRE CATEGORIA">
-                                <h:outputText value="#{ciudad.nombreCiudad}" />
-                            </p:column>
-                            
-                        </p:dataTable>
+                                <p:column headerText="NOMBRE CATEGORIA">
+                                    <h:outputText value="#{ciudad.nombreCiudad}" />
+                                </p:column>
 
-
-
+                            </p:dataTable>
+                        </p:panel>
                     </h:form>
                 </p:layoutUnit>
 

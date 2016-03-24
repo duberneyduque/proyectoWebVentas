@@ -19,6 +19,7 @@ import persistencia.CiudadFacadeLocal;
 public class CiudadLogica implements CiudadLogicaLocal {
    @EJB
        private CiudadFacadeLocal CiudadDAO;
+   
     @Override
     public void crear(Ciudad ciudad) throws Exception {
         Ciudad objCiudad = CiudadDAO.find(ciudad.getCodigoCiudad());
