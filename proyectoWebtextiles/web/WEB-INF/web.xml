@@ -17,12 +17,32 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
+    
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>faces/index.xhtml</welcome-file>
+        <welcome-file>faces/gestionLogeo.xhtml</welcome-file>
     </welcome-file-list>
+    
+     <filter>
+        <filter-name>FiltroAdministrador</filter-name>
+        <filter-class>ventas.Filtros.FiltroAdministrador</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FiltroAdministrador</filter-name>
+        <url-pattern>/faces/administrador/*</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>FiltroVendedor</filter-name>
+        <filter-class>ventas.Filtros.FiltroVendedor</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FiltroVendedor</filter-name>
+        <url-pattern>/faces/vendedor/*</url-pattern>
+    </filter-mapping>
+    
+   
 </web-app>

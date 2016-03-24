@@ -19,6 +19,7 @@ import modelo.Categoria;
 import modelo.Usuario;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.inputtext.InputText;
+import org.primefaces.component.selectonemenu.SelectOneMenu;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -42,6 +43,7 @@ public class Usuariovista {
   private CommandButton btnLimpiar;
   private List<Usuario> listaUsuario;
   private Usuario selecteUsuario;
+  private SelectOneMenu cmbtipoUsuario;
   
   @EJB
   private UsuarioLogicaLocal usuarioLogica;
@@ -177,6 +179,15 @@ public class Usuariovista {
     public void setUsuarioLogica(UsuarioLogicaLocal usuarioLogica) {
         this.usuarioLogica = usuarioLogica;
     }
+
+    public SelectOneMenu getCmbtipoUsuario() {
+        return cmbtipoUsuario;
+    }
+
+    public void setCmbtipoUsuario(SelectOneMenu cmbtipoUsuario) {
+        this.cmbtipoUsuario = cmbtipoUsuario;
+    }
+    
     
        
 public void accion_registrar(){
@@ -184,12 +195,12 @@ public void accion_registrar(){
         try {
             Usuario ObjetoUsuario=new Usuario();
             ObjetoUsuario.setIdUsuario(Integer.parseInt(txtidUsuario.getValue().toString()));
-            ObjetoUsuario.setNombreUsuario((txtnombreUsuario.getValue().toString()));
-            ObjetoUsuario.setApellidoUsuario((txtapellidoUsuario.getValue().toString()));
+            ObjetoUsuario.setNombreUsuario((txtnombreUsuario.getValue().toString().toUpperCase()));
+            ObjetoUsuario.setApellidoUsuario((txtapellidoUsuario.getValue().toString().toUpperCase()));
             ObjetoUsuario.setTelefonoUsuario((txttelefonoUsuario.getValue().toString()));
-            ObjetoUsuario.setCorreoUsuario((txtcorreoUsuario.getValue().toString()));
-            ObjetoUsuario.setTipoUsuario((txttipoUsuario.getValue().toString()));
-            ObjetoUsuario.setClaveUsuario((txtclaveUsuario.getValue().toString()));
+            ObjetoUsuario.setCorreoUsuario((txtcorreoUsuario.getValue().toString().toUpperCase()));
+            ObjetoUsuario.setTipoUsuario((cmbtipoUsuario.getValue().toString().toUpperCase()));
+            ObjetoUsuario.setClaveUsuario((txtclaveUsuario.getValue().toString().toUpperCase()));
             usuarioLogica.crear(ObjetoUsuario);
             listaUsuario=null;// sino la pongo null no la refresca por que ya la tomaria como llena            
             //limpiar();
@@ -205,12 +216,12 @@ public void modificarUsuario(){
      try {
          Usuario Usuariomodificar=new Usuario();
             Usuariomodificar.setIdUsuario(Integer.parseInt(txtidUsuario.getValue().toString()));
-            Usuariomodificar.setNombreUsuario((txtnombreUsuario.getValue().toString()));
-            Usuariomodificar.setApellidoUsuario((txtapellidoUsuario.getValue().toString()));
+            Usuariomodificar.setNombreUsuario((txtnombreUsuario.getValue().toString().toUpperCase()));
+            Usuariomodificar.setApellidoUsuario((txtapellidoUsuario.getValue().toString().toUpperCase()));
             Usuariomodificar.setTelefonoUsuario((txttelefonoUsuario.getValue().toString()));
-            Usuariomodificar.setCorreoUsuario((txtcorreoUsuario.getValue().toString()));
-            Usuariomodificar.setTipoUsuario((txttipoUsuario.getValue().toString()));
-            Usuariomodificar.setClaveUsuario((txtclaveUsuario.getValue().toString()));
+            Usuariomodificar.setCorreoUsuario((txtcorreoUsuario.getValue().toString().toUpperCase()));
+            Usuariomodificar.setTipoUsuario((cmbtipoUsuario.getValue().toString().toUpperCase()));
+            Usuariomodificar.setClaveUsuario((txtclaveUsuario.getValue().toString().toUpperCase()));
         usuarioLogica.modificar(Usuariomodificar);
         listaUsuario = null;
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "el usuario  se  modifico correctamente")); 
@@ -225,7 +236,7 @@ public void limpiar(){
     txtapellidoUsuario.setValue("");
     txttelefonoUsuario.setValue("");
     txtcorreoUsuario.setValue("");
-    txttipoUsuario.setValue("");
+    cmbtipoUsuario.setValue("seleccione");
     txtclaveUsuario.setValue("");
     btnRegistrar.setDisabled(false);
     btnModificar.setDisabled(true);
@@ -240,7 +251,7 @@ public void seleccionFila(SelectEvent evt){
     txtapellidoUsuario.setValue(objusuario.getApellidoUsuario());
     txttelefonoUsuario.setValue(objusuario.getTelefonoUsuario());
     txtcorreoUsuario.setValue(objusuario.getCorreoUsuario());
-    txttipoUsuario.setValue(objusuario.getTipoUsuario());
+   cmbtipoUsuario.setValue(objusuario.getTipoUsuario());
     txtclaveUsuario.setValue(objusuario.getClaveUsuario());
     
      btnRegistrar.setDisabled(true);

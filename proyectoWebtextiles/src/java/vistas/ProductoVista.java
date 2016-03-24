@@ -46,6 +46,10 @@ public class ProductoVista {
     private CommandButton btnModificar;
     private CommandButton btnEliminar;
     private CommandButton btnLimpiar;
+    private CommandButton btnCerrarSesion;
+    
+
+   
 
     //combobox de genero Producto 
     private SelectOneMenu cmbGenero;
@@ -109,6 +113,7 @@ public class ProductoVista {
     
     public InputText getTxtcategoria() {
         return txtcategoria;
+      
     }
     
     public void setTxtcategoria(InputText txtcategoria) {
@@ -214,6 +219,17 @@ public class ProductoVista {
     public void setCmbEstadoProducto(SelectOneMenu cmbEstadoProducto) {
         this.cmbEstadoProducto = cmbEstadoProducto;
     }
+     public CommandButton getBtnCerrarSesion() {
+        return btnCerrarSesion;
+    }
+
+    public void setBtnCerrarSesion(CommandButton btnCerrarSesion) {
+        this.btnCerrarSesion = btnCerrarSesion;
+    }
+
+    public ProductoVista(CommandButton btnCerrarSesion) {
+        this.btnCerrarSesion = btnCerrarSesion;
+    }
     
     public ArrayList<SelectItem> getOpcionEstadoProducto() {
         if (opcionEstadoProducto == null) {
@@ -286,13 +302,13 @@ public class ProductoVista {
             Producto nuevoProducto = new Producto();
             Categoria nuevaCategoria = new Categoria();
             nuevoProducto.setCodigoProducto(Integer.parseInt(txtcodigoProducto.getValue().toString()));
-            nuevoProducto.setNombreProducto(txtnombreProducto.getValue().toString());            
+            nuevoProducto.setNombreProducto(txtnombreProducto.getValue().toString().toUpperCase());            
             nuevoProducto.setFechaIngresoProducto((Date) txtfechaProducto.getValue());
-            nuevoProducto.setGeneroProducto(cmbGenero.getValue().toString());
-            nuevoProducto.setEstadoProducto(cmbEstadoProducto.getValue().toString());
-            nuevoProducto.setColorProducto(txtColorProducto.getValue().toString());
+            nuevoProducto.setGeneroProducto(cmbGenero.getValue().toString().toUpperCase());
+            nuevoProducto.setEstadoProducto(cmbEstadoProducto.getValue().toString().toUpperCase());
+            nuevoProducto.setColorProducto(txtColorProducto.getValue().toString().toUpperCase());
             nuevoProducto.setPrecioProducto(Double.parseDouble(txtPrecioProducto.getValue().toString()));
-            nuevaCategoria.setCodigoCategoria(Integer.parseInt(txtcategoria.getValue().toString()));
+            nuevaCategoria.setCodigoCategoria(Integer.parseInt(txtcategoria.getValue().toString().toUpperCase()));
             nuevoProducto.setCodigoCategoria(nuevaCategoria);
 
             productologica.crear(nuevoProducto);

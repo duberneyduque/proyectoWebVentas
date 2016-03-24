@@ -145,6 +145,7 @@
                                 <p:column>
                                     <p:commandButton value="LIMPIAR" binding="#{productoVistav.btnLimpiar}" action="#{productoVistav.limpiar()}" update="formulario"/>
                                 </p:column>
+                                 
                             </p:row>
                         </p:panelGrid>
 </p:panel>
@@ -191,6 +192,9 @@
                         </p:dataTable>
                     </h:form>
                 </p:layoutUnit>
+                 <p:column>
+                                    <p:commandButton value="CERRAR SESION"  binding="#{productoVistav.btnCerrarSesion}" action="#{sesionVista.cerrarSesion_action()}" update="formulario"/>
+                                </p:column>
 
             </p:layout>
 

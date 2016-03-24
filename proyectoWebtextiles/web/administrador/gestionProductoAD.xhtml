@@ -132,6 +132,9 @@
                                 <p:column>
                                     <p:commandButton value="LIMPIAR" binding="#{productoVistav.btnLimpiar}" action="#{productoVistav.limpiar()}" update="formulario"/>
                                 </p:column>
+                                <p:column>
+                                    <p:commandButton value="CERRAR SESION"  binding="#{productoVistav.btnCerrarSesion}" action="#{sesionVista.cerrarSesion_action()}" update="formulario"/>
+                                </p:column>
                             </p:row>
                         </p:panelGrid>
 </p:panel>
@@ -186,13 +189,13 @@
              <p:layoutUnit position="west" >
                  
                  <p:stack icon="/imagenes/1.png" expanded="true">
-                 <div id="oculto">
+                
                     <p:menuitem value="factura" icon="/imagenes/6.png" url="http://www.primefaces.org/themes.html"/>
                     <p:menuitem value="devolucion" icon="/imagenes/2.png" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionDevolucionAD.xhtml"/>
                      <p:menuitem value="categoria" icon="/imagenes/3.png" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionCategoriaAD.xhtml"/>
                      <p:menuitem value="productos" icon="/imagenes/4.png" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionProductoAD.xhtml" />
                      <p:menuitem value="usuario" icon="/imagenes/5.png" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionUsuarioAD.xhtml"/>
-                 </div>       
+                       
                  </p:stack>
                    
                 </p:layoutUnit>

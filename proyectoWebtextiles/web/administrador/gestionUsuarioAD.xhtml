@@ -69,7 +69,15 @@
                             <h:outputLabel value="correo"/>
                             <p:inputText id="txtcorreo" binding="#{usuarioVistav.txtcorreoUsuario}"/>
                             <h:outputLabel value="tipo" />
-                            <p:inputText id="txttipo" binding="#{usuarioVistav.txttipoUsuario}"/>
+                             <p:column>
+                                 <p:selectOneMenu id="cmbTipo" binding="#{usuarioVistav.cmbtipoUsuario}">
+                                        <f:selectItem itemValue="seleccione" itemLabel="seleccione"/>
+                                        <f:selectItem itemValue="administrador" itemLabel="administrador"/>
+                                        <f:selectItem itemValue="vendedor" itemLabel="vendedor"/>
+                                    </p:selectOneMenu>
+
+                                </p:column>
+                            
                             <h:outputLabel value="clave"/>
                             <p:inputText id="txtclave" binding="#{usuarioVistav.txtclaveUsuario}"/>
                             

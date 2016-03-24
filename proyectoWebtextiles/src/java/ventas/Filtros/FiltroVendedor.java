@@ -34,7 +34,7 @@ public class FiltroVendedor implements Filter{
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         try{
         String tipo=((HttpServletRequest) request).getSession().getAttribute("tipo").toString();
-        System.out.println("Tipo "+tipo);
+        
         if(tipo!=null)
         {
             if(!tipo.equals("vendedor"))
@@ -42,10 +42,10 @@ public class FiltroVendedor implements Filter{
               // Estudiante estudiante = (Estudiante) ((HttpServletRequest)request).getSession().getAttribute("usuario");
                 ((HttpServletResponse)response).sendRedirect("faces/SesionInvalida.xhtml");
             }else{
-                Usuario vendedor =(Usuario)((HttpServletRequest)request).getSession().getAttribute("Usuario");
+                Usuario usuario =(Usuario)((HttpServletRequest)request).getSession().getAttribute("Usuario");
              // Docente docente =(Docente)((HttpServletRequest)request).getSession().getAttribute("usuario");
             
-                if(vendedor!=null){
+                if(usuario!=null){
                     chain.doFilter(request, response);
                 }else{
                     ((HttpServletResponse)response).sendRedirect("faces/SesionInvalida.xhtml");
