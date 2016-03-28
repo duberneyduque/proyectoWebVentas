@@ -14,8 +14,10 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpServletRequest;
 import javax.swing.JOptionPane;
 import logica.CategoriaLogicaLocal;
 import logica.ProductoLogica;
@@ -35,7 +37,7 @@ import org.primefaces.event.SelectEvent;
 @ManagedBean(name = "productoVistav")
 @RequestScoped
 public class ProductoVista {
-    
+
     private InputText txtcodigoProducto;
     private InputText txtnombreProducto;
     private Calendar txtfechaProducto;
@@ -47,14 +49,12 @@ public class ProductoVista {
     private CommandButton btnEliminar;
     private CommandButton btnLimpiar;
     private CommandButton btnCerrarSesion;
-    
-
-   
+    private CommandButton btnReporte;
 
     //combobox de genero Producto 
     private SelectOneMenu cmbGenero;
     private ArrayList<SelectItem> opcionGenero;
-    
+
     private InputText txtColorProducto;
     private InputText txtPrecioProducto;
 
@@ -69,113 +69,121 @@ public class ProductoVista {
     //esta linea es para el objeto seleccionado
     private Producto selecProducto;
     private Categoria selecCategoriap;
-    
+
     @EJB
     private ProductoLogicaLocal productologica;
-    
+
     @EJB
     private CategoriaLogicaLocal categorialogia;
-    
+
     public ProductoVista() {
     }
-    
+
+    public CommandButton getBtnReporte() {
+        return btnReporte;
+    }
+
+    public void setBtnReporte(CommandButton btnReporte) {
+        this.btnReporte = btnReporte;
+    }
+
     public CommandButton getBtnRegistrar() {
         return btnRegistrar;
     }
-    
+
     public void setBtnRegistrar(CommandButton btnRegistrar) {
         this.btnRegistrar = btnRegistrar;
     }
-    
+
     public CommandButton getBtnModificar() {
         return btnModificar;
     }
-    
+
     public void setBtnModificar(CommandButton btnModificar) {
         this.btnModificar = btnModificar;
     }
-    
+
     public CommandButton getBtnEliminar() {
         return btnEliminar;
     }
-    
+
     public void setBtnEliminar(CommandButton btnEliminar) {
         this.btnEliminar = btnEliminar;
     }
-    
+
     public CommandButton getBtnLimpiar() {
         return btnLimpiar;
     }
-    
+
     public void setBtnLimpiar(CommandButton btnLimpiar) {
         this.btnLimpiar = btnLimpiar;
     }
-    
+
     public InputText getTxtcategoria() {
         return txtcategoria;
-      
+
     }
-    
+
     public void setTxtcategoria(InputText txtcategoria) {
         this.txtcategoria = txtcategoria;
     }
-    
+
     public Categoria getSelecCategoriap() {
         return selecCategoriap;
     }
-    
+
     public void setSelecCategoriap(Categoria selecCategoriap) {
         this.selecCategoriap = selecCategoriap;
     }
-    
+
     public ProductoLogicaLocal getProductologica() {
         return productologica;
     }
-    
+
     public void setProductologica(ProductoLogicaLocal productologica) {
         this.productologica = productologica;
     }
-    
+
     public CategoriaLogicaLocal getCategorialogia() {
         return categorialogia;
     }
-    
+
     public void setCategorialogia(CategoriaLogicaLocal categorialogia) {
         this.categorialogia = categorialogia;
     }
-    
+
     public InputText getTxtcodigoProducto() {
         return txtcodigoProducto;
     }
-    
+
     public void setTxtcodigoProducto(InputText txtcodigoProducto) {
         this.txtcodigoProducto = txtcodigoProducto;
     }
-    
+
     public InputText getTxtnombreProducto() {
         return txtnombreProducto;
     }
-    
+
     public void setTxtnombreProducto(InputText txtnombreProducto) {
         this.txtnombreProducto = txtnombreProducto;
     }
-    
+
     public Calendar getTxtfechaProducto() {
         return txtfechaProducto;
     }
-    
+
     public void setTxtfechaProducto(Calendar txtfechaProducto) {
         this.txtfechaProducto = txtfechaProducto;
     }
-    
+
     public SelectOneMenu getCmbGenero() {
         return cmbGenero;
     }
-    
+
     public void setCmbGenero(SelectOneMenu cmbGenero) {
         this.cmbGenero = cmbGenero;
     }
-    
+
     public ArrayList<SelectItem> getOpcionGenero() {
         /*   if(opcionGenero==null)
          {
@@ -191,35 +199,36 @@ public class ProductoVista {
          }*/
         return opcionGenero;
     }
-    
+
     public void setOpcionGenero(ArrayList<SelectItem> opcionGenero) {
         this.opcionGenero = opcionGenero;
     }
-    
+
     public InputText getTxtColorProducto() {
         return txtColorProducto;
     }
-    
+
     public void setTxtColorProducto(InputText txtColorProducto) {
         this.txtColorProducto = txtColorProducto;
     }
-    
+
     public InputText getTxtPrecioProducto() {
         return txtPrecioProducto;
     }
-    
+
     public void setTxtPrecioProducto(InputText txtPrecioProducto) {
         this.txtPrecioProducto = txtPrecioProducto;
     }
-    
+
     public SelectOneMenu getCmbEstadoProducto() {
         return cmbEstadoProducto;
     }
-    
+
     public void setCmbEstadoProducto(SelectOneMenu cmbEstadoProducto) {
         this.cmbEstadoProducto = cmbEstadoProducto;
     }
-     public CommandButton getBtnCerrarSesion() {
+
+    public CommandButton getBtnCerrarSesion() {
         return btnCerrarSesion;
     }
 
@@ -230,7 +239,7 @@ public class ProductoVista {
     public ProductoVista(CommandButton btnCerrarSesion) {
         this.btnCerrarSesion = btnCerrarSesion;
     }
-    
+
     public ArrayList<SelectItem> getOpcionEstadoProducto() {
         if (opcionEstadoProducto == null) {
             opcionEstadoProducto = new ArrayList<>();
@@ -245,27 +254,27 @@ public class ProductoVista {
         }
         return opcionEstadoProducto;
     }
-    
+
     public void setOpcionEstadoProducto(ArrayList<SelectItem> opcionEstadoProducto) {
         this.opcionEstadoProducto = opcionEstadoProducto;
     }
-    
+
     public List<Producto> getListaProductos() {
         if (listaProductos == null) {
-            
+
             try {
                 listaProductos = productologica.consultarTodo();
             } catch (Exception ex) {
                 Logger.getLogger(ProductoVista.class.getName()).log(Level.SEVERE, null, "ERROR LISTA PRODUCTO" + ex.getMessage());
-            }            
+            }
         }
         return listaProductos;
     }
-    
+
     public void setListaProductos(List<Producto> listaProductos) {
         this.listaProductos = listaProductos;
     }
-    
+
     public List<Categoria> getListaCategoriap() {
         try {
             if (listaCategoriap == null) {
@@ -276,33 +285,33 @@ public class ProductoVista {
         }
         return listaCategoriap;
     }
-    
+
     public void setListaCategoriap(List<Categoria> listaCategoriap) {
         this.listaCategoriap = listaCategoriap;
     }
-    
+
     public Producto getSelecProducto() {
         return selecProducto;
     }
-    
+
     public void setSelecProducto(Producto selecProducto) {
         this.selecProducto = selecProducto;
     }
-    
+
     public Categoria getSelecCategoria() {
         return selecCategoriap;
     }
-    
+
     public void setSelecCategoria(Categoria selecCategoria) {
         this.selecCategoriap = selecCategoria;
     }
-    
+
     public void accion_registrar() {
         try {
             Producto nuevoProducto = new Producto();
             Categoria nuevaCategoria = new Categoria();
             nuevoProducto.setCodigoProducto(Integer.parseInt(txtcodigoProducto.getValue().toString()));
-            nuevoProducto.setNombreProducto(txtnombreProducto.getValue().toString().toUpperCase());            
+            nuevoProducto.setNombreProducto(txtnombreProducto.getValue().toString().toUpperCase());
             nuevoProducto.setFechaIngresoProducto((Date) txtfechaProducto.getValue());
             nuevoProducto.setGeneroProducto(cmbGenero.getValue().toString().toUpperCase());
             nuevoProducto.setEstadoProducto(cmbEstadoProducto.getValue().toString().toUpperCase());
@@ -312,7 +321,7 @@ public class ProductoVista {
             nuevoProducto.setCodigoCategoria(nuevaCategoria);
 
             productologica.crear(nuevoProducto);
-             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Se resgistro con exito"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Se resgistro con exito"));
             // limpiar();
             listaProductos = null;
         } catch (Exception ex) {
@@ -352,35 +361,36 @@ public class ProductoVista {
          listagenero.add(genero);
          combtipogeneros=listagenero;
          */
-        
+
     }
 
     public void limpiar() {
-        try{
-        txtcodigoProducto.setValue("");
-        txtnombreProducto.setValue("");
-        txtfechaProducto.setValue(null);
-        txtfechaProducto.setLabel("");
-        cmbGenero.setValue(null);
-        cmbGenero.setLabel("seleccionar");
-        cmbEstadoProducto.setValue(null);
-        cmbEstadoProducto.setLabel("");
-        txtColorProducto.setValue("");
-        txtPrecioProducto.setValue("");
-        txtcategoria.setValue("");
-        
-        btnRegistrar.setDisabled(false);
-        }catch(Exception ex){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje", "El formulario no se pudo limpiar  "+ex.getMessage()));
+        try {
+            txtcodigoProducto.setValue("");
+            txtnombreProducto.setValue("");
+            txtfechaProducto.setValue(null);
+            txtfechaProducto.setLabel("");
+            cmbGenero.setValue(null);
+            cmbGenero.setLabel("seleccionar");
+            cmbEstadoProducto.setValue(null);
+            cmbEstadoProducto.setLabel("");
+            txtColorProducto.setValue("");
+            txtPrecioProducto.setValue("");
+            txtcategoria.setValue("");
+
+            btnRegistrar.setDisabled(false);
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje", "El formulario no se pudo limpiar  " + ex.getMessage()));
         }
     }
-    public void modificarProducto(){
-    
-       try {
+
+    public void modificarProducto() {
+
+        try {
             Producto nuevoProducto = new Producto();
             Categoria nuevaCategoria = new Categoria();
             nuevoProducto.setCodigoProducto(Integer.parseInt(txtcodigoProducto.getValue().toString()));
-            nuevoProducto.setNombreProducto(txtnombreProducto.getValue().toString());            
+            nuevoProducto.setNombreProducto(txtnombreProducto.getValue().toString());
             nuevoProducto.setFechaIngresoProducto((Date) txtfechaProducto.getValue());
             nuevoProducto.setGeneroProducto(cmbGenero.getValue().toString());
             nuevoProducto.setColorProducto(txtColorProducto.getValue().toString());
@@ -390,22 +400,55 @@ public class ProductoVista {
             nuevoProducto.setEstadoProducto(cmbEstadoProducto.getValue().toString());
             productologica.modificar(nuevoProducto);
             // limpiar();
-             FacesContext.getCurrentInstance().addMessage("Mensaje", new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Se modifico con exito"));
+            FacesContext.getCurrentInstance().addMessage("Mensaje", new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Se modifico con exito"));
             listaProductos = null;
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage("Mensaje", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Informacion", "No se modificó con Éxito  "+ex.getMessage()));
+            FacesContext.getCurrentInstance().addMessage("Mensaje", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Informacion", "No se modificó con Éxito  " + ex.getMessage()));
         }
     }
-    public void accion_eliminar(){
-     try {
-        Producto productoEliminado = new Producto();
-        productoEliminado.setCodigoProducto(Integer.parseInt(txtcodigoProducto.getValue().toString()));
-        productologica.eliminar(productoEliminado);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "El pruducto se elimino correctamente"));
-        listaProductos = null;
-    } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje", "El producto no se pudo eliminar"+ex.getMessage()));
+
+    public void accion_eliminar() {
+        try {
+            Producto productoEliminado = new Producto();
+            productoEliminado.setCodigoProducto(Integer.parseInt(txtcodigoProducto.getValue().toString()));
+            productologica.eliminar(productoEliminado);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "El pruducto se elimino correctamente"));
+            listaProductos = null;
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje", "El producto no se pudo eliminar" + ex.getMessage()));
+        }
+
     }
-     
-}
+
+    public void generarReporteProducto() {
+
+        try {
+
+            FacesContext fc = FacesContext.getCurrentInstance();
+
+            ExternalContext ec = fc.getExternalContext();
+
+            HttpServletRequest sr = ((HttpServletRequest) ec.getRequest());
+
+            String scheme = sr.getScheme();
+
+            String serverName = sr.getServerName();
+
+            int port = sr.getServerPort();
+
+            String contextPath = sr.getContextPath();
+
+            String url = scheme + "://" + serverName + ":" + port + contextPath;
+
+            System.out.println("Entro aqui");
+
+            productologica.generarReporteProducto(url);
+
+        } catch (Exception ex) {
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: ", ex.getMessage()));
+
+        }
+
+    }
 }

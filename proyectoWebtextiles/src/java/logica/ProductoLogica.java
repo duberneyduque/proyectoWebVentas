@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import modelo.Producto;
+import org.primefaces.context.RequestContext;
 import persistencia.ProductoFacadeLocal;
 
 /**
@@ -48,30 +49,29 @@ public class ProductoLogica implements ProductoLogicaLocal {
                 throw new Exception("Codigo de producto obligatorio");
             } else if (producto.getNombreProducto() == null || producto.getNombreProducto().equals("")) {
                 throw new Exception("El nombre es obligatorio");
-            }else if(producto.getFechaIngresoProducto()==null || producto.getFechaIngresoProducto().equals("")){
-                 throw new Exception("La fecha es obligatoria");
-            }else if(producto.getGeneroProducto()==null || producto.getGeneroProducto().equals("")){
-               throw new Exception("El genero es obligatorio"); 
-            }else if(producto.getColorProducto()==null || producto.getColorProducto().equals("")){
+            } else if (producto.getFechaIngresoProducto() == null || producto.getFechaIngresoProducto().equals("")) {
+                throw new Exception("La fecha es obligatoria");
+            } else if (producto.getGeneroProducto() == null || producto.getGeneroProducto().equals("")) {
+                throw new Exception("El genero es obligatorio");
+            } else if (producto.getColorProducto() == null || producto.getColorProducto().equals("")) {
                 throw new Exception("El color es ob es obligatorio");
-            }else if(producto.getPrecioProducto()==null){
-               throw new Exception("El precio es obligatorio");
-            }else if(producto.getCodigoCategoria().getCodigoCategoria()==null){
+            } else if (producto.getPrecioProducto() == null) {
+                throw new Exception("El precio es obligatorio");
+            } else if (producto.getCodigoCategoria().getCodigoCategoria() == null) {
                 throw new Exception("El codigo de categoria es obligatorio");
-            }else if(producto.getEstadoProducto()==null || producto.getEstadoProducto().equals("")){
+            } else if (producto.getEstadoProducto() == null || producto.getEstadoProducto().equals("")) {
                 throw new Exception("El codigo de categoria es obligatorio");
             }
-        }else{
+        } else {
             throw new Exception("El producto no tiene informacion");
         }
-            
+
         if (objproducto == null) {
             throw new Exception("El producto no existe. no se puede modificar");
         } else {
             productoDAO.edit(producto);
         }
     }
-    
 
     @Override
     public void eliminar(Producto producto) throws Exception {
@@ -107,4 +107,23 @@ public class ProductoLogica implements ProductoLogicaLocal {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+    @Override
+    public void generarReporteProducto(String url) throws Exception {
+        String params
+                = "'"
+                + url + "/Reporteproducto.do',"
+                + "'reportWindow', "
+                + "'"
+                + "width=1024"
+                + ",height=768"
+                + ",status=no"
+                + ",toolbar=no"
+                + ",menubar=no"
+                + ",location=no"
+                + ",scrollbars=yes"
+                + "'";
+
+        RequestContext.getCurrentInstance().execute("location.href=" + params + ";");
+    }
+
 }

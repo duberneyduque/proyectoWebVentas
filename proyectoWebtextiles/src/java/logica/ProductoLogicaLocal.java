@@ -25,4 +25,6 @@ public interface ProductoLogicaLocal {
     Producto consultarPorCodigo(Integer codigoProducto) throws Exception;
 
     List<Producto> consultarTodo() throws Exception;
+    
+    public void generarReporteProducto(String url) throws Exception;
 }

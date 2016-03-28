@@ -4,10 +4,10 @@
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
-    <context-param>  
-    <param-name>primefaces.THEME</param-name>  
-    <param-value>hot-sneaks</param-value>  
-    </context-param>  
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>hot-sneaks</param-value>
+    </context-param>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -17,7 +17,6 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
-    
     <session-config>
         <session-timeout>
             30
@@ -26,8 +25,7 @@
     <welcome-file-list>
         <welcome-file>faces/gestionLogeo.xhtml</welcome-file>
     </welcome-file-list>
-    
-     <filter>
+    <filter>
         <filter-name>FiltroAdministrador</filter-name>
         <filter-class>ventas.Filtros.FiltroAdministrador</filter-class>
     </filter>
@@ -43,6 +41,12 @@
         <filter-name>FiltroVendedor</filter-name>
         <url-pattern>/faces/vendedor/*</url-pattern>
     </filter-mapping>
-    
-   
+    <servlet>
+        <servlet-name>ReporteProducto</servlet-name>
+        <servlet-class>preportes.ReporteProducto1</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ReporteProducto</servlet-name>
+        <url-pattern>/Reporteproducto.do</url-pattern>
+    </servlet-mapping>
 </web-app>
