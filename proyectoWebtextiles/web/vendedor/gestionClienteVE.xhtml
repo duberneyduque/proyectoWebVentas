@@ -38,6 +38,9 @@
 
                     </p:menu>
                     </h:form>
+                    <p:column>
+                           <p:commandButton value="CERRAR SESION"  binding="#{productoVistav.btnCerrarSesion}" action="#{sesionVista.cerrarSesion_action()}" update="formulario"/>
+                     </p:column>
                 </p:layoutUnit>
 
                 <p:layoutUnit position="center">

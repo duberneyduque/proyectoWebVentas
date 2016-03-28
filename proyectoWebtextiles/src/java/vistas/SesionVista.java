@@ -91,6 +91,7 @@ public class SesionVista {
 
             Usuario usuario = usuariologica.consultarPorCodigo(Integer.parseInt(txtUsuario.getValue().toString()));
             if (usuario == null) {
+               
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "error", "el usuario no existe"));
             } else {
                 if (usuario.getClaveUsuario().equals(clave)) {
@@ -104,11 +105,13 @@ public class SesionVista {
                         extcontex.redirect(urlV);
                     }
                 } else {
+                   
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "error", "Contraseña incorrecta"));
                 }
             }
         } catch (Exception ex) {
-            Logger.getLogger(SesionVista.class.getName()).log(Level.SEVERE, null, ex);
+           // Logger.getLogger(SesionVista.class.getName()).log(Level.SEVERE, null, ex);
+             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "error", "el usuario tiene que ser en numeros"));
         }
 
     }
@@ -118,7 +121,7 @@ public class SesionVista {
             FacesContext context = FacesContext.getCurrentInstance();
             ExternalContext extContext = context.getExternalContext();
             extContext.getSessionMap().remove("tipo");
-            extContext.getSessionMap().remove("usuario");
+            extContext.getSessionMap().remove("Usuario");
             String url = extContext.encodeActionURL(context.getApplication().getViewHandler().getActionURL(context, "/gestionLogeo.xhtml"));
             extContext.redirect(url);
         } catch (IOException ex) {

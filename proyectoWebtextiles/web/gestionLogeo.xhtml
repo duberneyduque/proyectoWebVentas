@@ -17,25 +17,28 @@
                 <div>GESTION LOGEO</div>
                 
                 <p:layoutUnit position="center">
+                    <div align="center">
                     <h:form id="forma">
                         <p:growl id="growl" showDetail="true" sticky="true" />
                         <p:panel id="campos">
                             <p:panelGrid>
+                                
                                 <p:row>
                                     <p:column>
                                         <h:outputText value="Usuario"/>
                                     </p:column>
                                     <p:column>
-                                        <p:inputText id="txtUsuario" binding="#{sesionVista.txtUsuario}"/>
+                                        <p:inputText type="number" id="txtUsuario" binding="#{sesionVista.txtUsuario}"/>
                                     </p:column>
                                     <p:column>
                                         <h:outputText value="Contraseña"/>
                                     </p:column>
                                     <p:column>
-                                        <p:password id="txtClave" binding="#{sesionVista.txtclave}" feedback="true"/>
+                                        <p:password id="txtClave" binding="#{sesionVista.txtclave}"/>
                                     </p:column>
                                     
                                 </p:row>
+                               
                                 <p:row>
                                     <p:column>
                                         <p:commandButton id="btnIngresar"  value="Ingresar"  action="#{sesionVista.ingresar()}" update="growl" />
@@ -46,6 +49,7 @@
                         </p:panel>
                         
                     </h:form>
+                             </div>
                 </p:layoutUnit>
              </body>
         

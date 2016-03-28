@@ -26,6 +26,7 @@
                 </p:layoutUnit>
 
                 <p:layoutUnit position="west" size="175" header="ocultar Menu" collapsible="true">
+                     <h:form>
                     <p:menu>
                         
                         <p:submenu label="ADMINISTRADOR">
@@ -37,7 +38,7 @@
                             <p:menuitem value="Devolucion" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionDevolucionAD.xhtml" />
                             <p:menuitem value="Usuario" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionUsuarioAD.xhtml"/>
                             <p:menuitem value="Factura" url="http://www.primefaces.org/themes.html" />
-                            
+                             
                         </p:submenu>
                         
                          <p:submenu label="VENDEDOR">
@@ -45,11 +46,17 @@
                             <p:menuitem value="Devolucion" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionDevolucionVE.xhtml" />
                             <p:menuitem  value="Producto" url="http://localhost:8080/proyectoWebtextiles/faces/administrador/gestionProductoVE.xhtml"/>
                             <p:menuitem value="Factura" url="http://www.primefaces.org/themes.html" />
+                           
                             
 
                         </p:submenu>
 
                     </p:menu>
+                          
+                  </h:form>
+                     <p:column>
+                           <p:commandButton value="CERRAR SESION"  binding="#{productoVistav.btnCerrarSesion}" action="#{sesionVista.cerrarSesion_action()}" update="formulario"/>
+                     </p:column>
                 </p:layoutUnit>
 
                 <p:layoutUnit position="center">
@@ -146,6 +153,7 @@
 
                     </h:form>
                 </p:layoutUnit>
+               
 
             </p:layout>
 

@@ -19,7 +19,7 @@ and open the template in the editor.
 
             <script>
                 //ingresa el tiempo en formato "minutos:segundos" El rango de minutos debe ser de 0 a infinito. El rango de segundos debe ser de 0 a 59
-                var limit="1:05";
+                var limit="0:05";
                 if (document.images){
                     var parselimit=limit.split(":");
                     parselimit=parselimit[0]*60+parselimit[1]*1;
@@ -53,7 +53,7 @@ and open the template in the editor.
                 <div align="center">
                     <h:outputText value="No Ha Iniciado Sesión o Esta Ya Ha Caducado"/>
                     <br/>
-                    <h:graphicImage url="/images/advertencia.jpg" alt="Atención"  />
+                    <h:graphicImage url="" alt="Atención"  />
                     <br/>
                     <h:outputText value="Será Redireccionado a La Página Principal en "/><b><font color="#ff0000"><span id="tiempo"></span></font></b>                
                 </div>

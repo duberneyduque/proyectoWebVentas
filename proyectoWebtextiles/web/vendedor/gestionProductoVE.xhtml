@@ -23,7 +23,6 @@
                 <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
                     TEXTILES DUQUE
                 </p:layoutUnit>
-
                 <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
                     <h:form>
                         <p:menu>
@@ -37,6 +36,7 @@
 
                     </p:menu>
                     </h:form>
+                   
                 </p:layoutUnit>
 
                 <p:layoutUnit position="center">
@@ -144,8 +144,7 @@
                                 </p:column>
                                 <p:column>
                                     <p:commandButton value="LIMPIAR" binding="#{productoVistav.btnLimpiar}" action="#{productoVistav.limpiar()}" update="formulario"/>
-                                </p:column>
-                                 
+                                </p:column>    
                             </p:row>
                         </p:panelGrid>
 </p:panel>
@@ -192,9 +191,7 @@
                         </p:dataTable>
                     </h:form>
                 </p:layoutUnit>
-                 <p:column>
-                                    <p:commandButton value="CERRAR SESION"  binding="#{productoVistav.btnCerrarSesion}" action="#{sesionVista.cerrarSesion_action()}" update="formulario"/>
-                                </p:column>
+                
 
             </p:layout>
 
