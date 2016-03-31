@@ -17,6 +17,7 @@ import logica.ClienteLogicaLocal;
 import modelo.Cliente;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.inputtext.InputText;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -29,7 +30,7 @@ public class ClienteVista {
     private InputText txtNombreCliente;
     private InputText txtDireccionCliente;
     private InputText txtCorreoCliente;
-    private InputText txtTelefonocliente;
+    private InputText txtCelularcliente;
     private CommandButton btnRegistrar;
     private CommandButton btnModificar;
     private CommandButton btnEliminar;
@@ -70,8 +71,15 @@ public class ClienteVista {
         return txtCorreoCliente;
     }
 
-    public void setTxtCorreoCliente(InputText txtCorreoClientge) {
-        this.txtCorreoCliente = txtCorreoClientge;
+    public void setTxtCorreoCliente(InputText txtCorreoCliente) {
+        this.txtCorreoCliente = txtCorreoCliente;
+    }
+     public InputText getTxtCelularCliente() {
+        return txtCelularcliente;
+    }
+
+    public void setTxtCelularCliente(InputText txtCelularCliente) {
+        this.txtCelularcliente = txtCelularCliente;
     }
     
 
@@ -135,19 +143,24 @@ public class ClienteVista {
         try {
             Cliente nuevocliente = new Cliente();
             nuevocliente.setCedulaCliente(Long.parseLong(txtCedulaCliente.getValue().toString()));
-            nuevocliente.setNombreCliente(txtNombreCliente.getValue().toString());
-            nuevocliente.setDireccionCliente(txtDireccionCliente.getValue().toString());
-            nuevocliente.setCorreoCliente(txtCorreoCliente.getValue().toString());
-            nuevocliente.setCelularCliente(txtTelefonocliente.getValue().toString());
+            if(validarString(txtNombreCliente.getValue().toString().toUpperCase())){
+             nuevocliente.setNombreCliente(txtNombreCliente.getValue().toString());
+            }else{
+                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje", "Solo recibe letras"));
+            }
+            nuevocliente.setDireccionCliente(txtDireccionCliente.getValue().toString().toUpperCase());
+            nuevocliente.setCorreoCliente(txtCorreoCliente.getValue().toString().toUpperCase());
+            nuevocliente.setCelularCliente(txtCelularcliente.getValue().toString());
             clientelogica.create(nuevocliente);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "El cliente se registró correctamente."));
             listaClientes = null;
             limpiar();
         }catch(NumberFormatException e){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El número del cliente debe ser numerico"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La cedula  del cliente debe ser numerico"));
         }catch (Exception  ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", ex.getMessage()));
         }
+      
     }
     
     public void limpiar(){
@@ -155,7 +168,7 @@ public class ClienteVista {
         txtNombreCliente.setValue("");
         txtDireccionCliente.setValue("");
         txtCorreoCliente.setValue("");
-        txtTelefonocliente.setValue("");
+        txtCelularcliente.setValue("");
         btnRegistrar.setDisabled(false);
         btnModificar.setDisabled(true);
         btnEliminar.setDisabled(true);
@@ -164,10 +177,11 @@ public class ClienteVista {
         try {
             Cliente m = new Cliente();
             m.setCedulaCliente(Long.parseLong(txtCedulaCliente.getValue().toString()));
-            m.setNombreCliente(txtNombreCliente.getValue().toString());
-            m.setDireccionCliente(txtDireccionCliente.getValue().toString());
-            m.setCorreoCliente(txtCorreoCliente.getValue().toString());
-            m.setCelularCliente(txtTelefonocliente.getValue().toString());
+            m.setNombreCliente(txtNombreCliente.getValue().toString().toUpperCase());
+            m.setDireccionCliente(txtDireccionCliente.getValue().toString().toUpperCase());
+            m.setCorreoCliente(txtCorreoCliente.getValue().toString().toUpperCase());
+            m.setCelularCliente(txtCelularcliente.getValue().toString());
+        
            clientelogica.edit(m);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "El cliente se  modifico correctamente"));
         listaClientes = null;
@@ -182,12 +196,34 @@ public class ClienteVista {
             Cliente m = new Cliente();
             m.setCedulaCliente(Long.parseLong(txtCedulaCliente.getValue().toString()));            
             clientelogica.remove(m);
-             limpiar();
+             //limpiar();
             listaClientes =null;
             FacesContext.getCurrentInstance().addMessage("Mensaje", new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "El cliente se eliminó con Éxito"));
         } catch (Exception ex) {
             Logger.getLogger(ClienteVista.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     
+    }
+    public void seleccionFila(SelectEvent evt){
+    Cliente objeCliente= selectedCliente;
+    txtCedulaCliente.setValue(objeCliente.getCedulaCliente());
+    txtNombreCliente.setValue(objeCliente.getNombreCliente());
+    txtDireccionCliente.setValue(objeCliente.getDireccionCliente());
+    txtCorreoCliente.setValue(objeCliente.getCorreoCliente());
+    txtCelularcliente.setValue(objeCliente.getCelularCliente());
+    btnRegistrar.setDisabled(true);
+    btnModificar.setDisabled(false);
+    btnEliminar.setDisabled(false);
+    btnLimpiar.setDisabled(false);
+    txtCedulaCliente.setDisabled(true);
+}
+    public boolean validarString (String texto){
+        try{
+            Integer.parseInt(texto);
+        } catch(Exception e ){
+            return true;
+        }
+        return  false;
     }
 }

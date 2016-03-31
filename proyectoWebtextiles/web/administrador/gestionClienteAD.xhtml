@@ -9,11 +9,11 @@
         <h:head>
             <f:facet name="first">
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-                <title>TEXTILESDUQUE/CIUDAD</title>
+                <title>TEXTILESDUQUE/CLIENTE</title>
             </f:facet>
         </h:head>
 
-        <h:body style="font-size: 12px;">
+        <h:body style="font-size: 12px">
 
             <p:layout fullPage="true">
 
@@ -25,7 +25,7 @@
                     TEXTILES DUQUE
                 </p:layoutUnit>
 
-                 <p:layoutUnit position="west" size="175" header="ocultar Menu" collapsible="true">
+               <p:layoutUnit position="west" size="175" header="ocultar Menu" collapsible="true">
                      <h:form>
                     <p:menu>
                         
@@ -61,26 +61,67 @@
 
                 <p:layoutUnit position="center">
                         <h:form id="formulario">
+                            <p:growl id="growl" showDetail="true" sticky="true"></p:growl>
+                        <p:panelGrid>
 
-                        <p:panelGrid columns="5">
-
-                            <h:outputLabel value="Cedula Cliente" />
-                            <p:inputText id="txtCedulaCliente" binding="#{ClienteVista.txtCedulaCliente}"/>
-                            <h:outputLabel  value="Nombre Cliente"/>
-                            <p:inputText id="txtNombreCliente" binding="#{ClienteVista.txtNombreCliente}"/>
-                           
-
-                            <p:commandButton value="REGISTRAR" binding="#{ClienteVista.btnRegistrar}" action="#{ClienteVista.accion_registrar()}" update="formulario"/>
-
-                            <p:commandButton value="MODIFICAR" binding="#{ClienteVista.btnModificar}" action="#{ClienteVista.accion_modificar()}" update="formulario"/>
-                            <p:commandButton value="ELIMINAR" binding="#{ClienteVista.btnEliminar}" action="#{ClienteVista.accion_eliminar()}" update="formulario"/>
-                            <p:commandButton value="LIMPIAR" binding="#{ClienteVista.btnLimpiar}" action="#{ClienteVista.limpiar()}" update="formulario"/>
+                            <p:row>
+                                <p:column>
+                                    <h:outputLabel value="Cedula Cliente"     />
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="txtCedulaCliente" binding="#{ClienteVista.txtCedulaCliente}"/>
+                                </p:column>
+                                <p:column>
+                                    <h:outputLabel  value="Nombre Cliente"/>
+                                </p:column>
+                                <p:column>
+                                     <p:inputText id="txtNombreCliente" binding="#{ClienteVista.txtNombreCliente}"/>
+                                </p:column>
+                                <p:column>
+                                     <h:outputLabel  value="Direccion Cliente"/>
+                                </p:column>
+                                  <p:column>
+                                    <p:inputText id="txtDireccionCliente" binding="#{ClienteVista.txtDireccionCliente}"/>
+                                </p:column>
+                               
+                            </p:row>
+                            <p:row>
+                             <p:column>
+                                     <h:outputLabel  value="Correo Cliente"/>
+                                </p:column>
+                                <p:column>
+                                     <p:inputText id="txtCorreoCliente" binding="#{ClienteVista.txtCorreoCliente}"/>
+                                </p:column>
+                                <p:column>
+                                    <h:outputLabel  value=" Celular Cliente"/>
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="txtCelularCliente" binding="#{ClienteVista.txtCelularCliente}"/>
+                                </p:column>
+                            
+                                
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                     <p:commandButton value="Registrar" binding="#{ClienteVista.btnRegistrar}" action="#{ClienteVista.accion_registrar()}" update="formulario"/>
+                                </p:column>
+                                <p:column>
+                                     <p:commandButton value="Modificar" binding="#{ClienteVista.btnModificar}" action="#{ClienteVista.modificar()}" update="formulario"/>
+                                </p:column>
+                                <p:column>
+                                     <p:commandButton value="Eliminar" binding="#{ClienteVista.btnEliminar}" action="#{ClienteVista.eliminar()}" update="formulario"/>
+                                </p:column>       
+                                <p:column>
+                                     <p:commandButton value="Limpiar" binding="#{ClienteVista.btnLimpiar}" action="#{ClienteVista.limpiar()}" update="formulario"/>
+                                </p:column>
+                            </p:row>
+                            
                         </p:panelGrid>
 
-                            <p:dataTable var="cliente" value="#{ClienteVista.listaCLiente}" widgetVar="cliente"
+                            <p:dataTable var="cliente" value="#{ClienteVista.listaCliente}" widgetVar="cliente"
                                          emptyMessage="No cars found with given criteria" filteredValue="#{ClienteVista.listaCliente}"
                                       selectionMode="single"
-                                      selection="#{cliente.selecteCliente}"
+                                      selection="#{ClienteVista.selectedCliente}"
                                       rowKey="#{cliente.cedulaCliente}">
                                 <p:ajax event="rowSelect" listener="#{ClienteVista.seleccionFila(evt)}" update=":formulario" />
 
@@ -91,18 +132,25 @@
                                 </p:outputPanel>
                             </f:facet>
 
-                                <p:column filterBy="#{ClienteVista.cedulacliente}" headerText="CODIGO CIUDAD" footerText="" filterMatchMode="exact">
-                                    <h:outputText value="#{ciudad.codigoCiudad}" />
+                                <p:column filterBy="#{ClienteVista}" headerText="CEDULA CLIENTE" footerText="" filterMatchMode="exact">
+                                    <h:outputText value="#{cliente.cedulaCliente}" />
                             </p:column>
 
                             <p:column headerText="NOMBRE CLIENTE">
                                 <h:outputText value="#{cliente.nombreCliente}" />
                             </p:column>
+                                
+                                <p:column headerText="Direccion cliente">
+                                    <h:outputText value="#{cliente.direccionCliente}" />
+                            </p:column>
+                                <p:column headerText="Correo Cliente">
+                                    <h:outputText value="#{cliente.correoCliente}" />
+                            </p:column>
+                                <p:column headerText="Celular Cliente">
+                                    <h:outputText value="#{cliente.celularCliente}" />
+                            </p:column>
                             
-                        </p:dataTable>
-
-
-
+                        </p:dataTable>     
                     </h:form>
                 </p:layoutUnit>
 

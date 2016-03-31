@@ -129,23 +129,26 @@ public void accion_registrar(){
         try {
             Categoria ObjetoCategoria=new Categoria();
             ObjetoCategoria.setCodigoCategoria(Integer.parseInt(txtcodigoCategoria.getValue().toString()));
-            ObjetoCategoria.setNombreCategoria(txtnombreCategoria.getValue().toString());
+              if(validarString(txtnombreCategoria.getValue().toString())){
+              ObjetoCategoria.setNombreCategoria(txtnombreCategoria.getValue().toString().toUpperCase());
+            }else{
+                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje", "Solo recibe letras"));
+            }
+            
             categoriaLogica.crear(ObjetoCategoria);
             listaCategoria=null;// sino la pongo null no la refresca por que ya la tomaria como llena            
-            //limpiar();
-            //Ambientedeaprendizaje ambiente=new Ambientedeaprendizaje();
-            //ambiente.setCodigoambiente(Integer.parseInt(txtcodigoambiente.getValue().toString()));
-            //ObjetoReserva.setCodigoambiente(ambiente);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Mesaje informativo SE REGISTRO."));
-            } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Informacion", ex.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", " Se registro exitosamente"));
+            } catch (NumberFormatException e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El codigo debe ser obligatorio"));
+        }catch(Exception ex ){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", ex.getMessage()));
         }
 }
 public void accion_modificar(){
      try {
         Categoria nuevocategoria = new Categoria();
         nuevocategoria.setCodigoCategoria(Integer.parseInt(txtcodigoCategoria.getValue().toString()));
-        nuevocategoria.setNombreCategoria(txtnombreCategoria.getValue().toString());
+        nuevocategoria.setNombreCategoria(txtnombreCategoria.getValue().toString().toUpperCase());
         categoriaLogica.modificar(nuevocategoria);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "la categoria se  modifico correctamente"));
         listaCategoria = null;
@@ -180,7 +183,14 @@ public void accion_eliminar(){
         listaCategoria = null;
     } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje", "la categoria no se pudo eliminar"));
-    }
-     
+    }   
 }
+ public boolean validarString (String texto){
+        try{
+            Integer.parseInt(texto);
+        } catch(Exception e ){
+            return true;
+        }
+        return  false;
+    }
 }

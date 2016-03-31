@@ -64,14 +64,8 @@ public class ClienteLogica implements ClienteLogicaLocal {
     @Override
     public void remove(Cliente cliente) throws Exception {
         Cliente objCliente = clienteDAO.find(cliente.getCedulaCliente());
-        if(cliente!=null){
-            if(cliente.getCedulaCliente()==null){
-                throw new Exception("La cedula es  Obligatorio");                
-            }else if(cliente.getNombreCliente()==null || cliente.getNombreCliente().equals("")){
-                throw new Exception("El nombre es obligatorio");
-            }
-        }else{
-            throw new Exception("El cliente no tiene información");
+        if(cliente==null){
+            throw new Exception("El cliente no tiene información");                                                    
         }
         
         if(objCliente==null){
